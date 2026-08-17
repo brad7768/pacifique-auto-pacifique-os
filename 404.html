@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page introuvable — Pacifique Auto</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .err-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 5% 80px; text-align: center; background: var(--navy); }
+    .err-code { font-family: var(--font-display); font-weight: 900; font-size: clamp(72px, 14vw, 120px); color: var(--red); line-height: 1; }
+    .err-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 4vw, 32px); color: var(--white); text-transform: uppercase; letter-spacing: 2px; margin-top: 16px; }
+    .err-desc { margin-top: 16px; font-size: 16px; color: var(--gray); max-width: 420px; line-height: 1.6; }
+    .err-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div class="err-wrap">
+    <div class="err-code">404</div>
+    <h1 class="err-title">Page introuvable</h1>
+    <p class="err-desc">L’adresse demandée n’existe pas ou a été déplacée. Retournez à l’accueil Pacifique Auto.</p>
+    <div class="err-actions">
+      <a href="index.html" class="btn-primary">Retour à l’accueil</a>
+      <a href="contact.html" class="btn-outline">Nous contacter</a>
+    </div>
+  </div>
+</body>
+</html>

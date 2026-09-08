@@ -41,7 +41,7 @@ IMG-001 n’est **pas** un filler universel.
 | Ratio d’usage recommandé | Card 16:10 (crop depuis portrait) |
 | Crop desktop | Cabine + benne, centre |
 | Crop mobile | Cabine serrée |
-| **Interdit** | Hero homepage par défaut · industries hors transport lourd · filler S2–S10 |
+| **Interdit** | Hero homepage par défaut · **hero `/solutions`** · industries hors transport lourd · filler S2–S10 · Pièces / Maintenance / Fleet / Financement |
 
 ### IMG-002 — Architecture visuelle
 
@@ -92,7 +92,7 @@ Aucun autre PNG/JPG/SVG de marque, produit, chantier, logo constructeur, icône 
 | IMG-LOGO-BOSCH | logo marque | S5 | Haute prod |
 | IMG-HOME-PROJECT-* | projets réels | S7 | Si contenu validé |
 | IMG-YASSA | infrastructures | hors homepage v1 | Plus tard (Réseau) |
-| IMG-ALIOS | — | **interdit homepage** | — |
+| IMG-ALIOS / visuel CFAO | — | **interdit** homepage et Solutions | Non confirmés |
 | Carte Afrique / réseau | — | **interdit homepage v1** | Plus tard si données |
 
 ---
@@ -112,3 +112,23 @@ Aucun autre PNG/JPG/SVG de marque, produit, chantier, logo constructeur, icône 
 véhicules · camions · pièces · atelier · maintenance · flotte · chantiers · BTP · mines · transport · agriculture · énergie · projets · infrastructures · personnes · marques · logos · icônes
 
 **Couvert aujourd’hui :** camions / véhicules / SINOTRUK (IMG-001 seulement).
+
+---
+
+## 5. Usage Solutions (Phase 3A — arbitrage)
+
+Source : `SOLUTIONS_MASTER_SPEC.md` §8.  
+Rescan arbitrage : mêmes fichiers que §1. Aucun asset nouveau. Aucune image Alios / CFAO.
+
+| Page | Image autorisée | Interdit |
+|------|-----------------|----------|
+| `/solutions` (hub) hero | **Aucune photo.** Navy `#09183A` + typographie forte + composition graphique industrielle sobre | IMG-001 · image générée |
+| `/solutions` S2 carte Véhicules | IMG-001 (crop 16:10) | Réemploi sur les 4 autres cartes |
+| `/solutions/vehicules` | IMG-001 (hero de **cette** page ou carte produit) | Hero du hub |
+| `/solutions/pieces-services` | **Manquant** après scan | IMG-001 |
+| `/solutions/maintenance` | **Manquant** après scan | IMG-001 |
+| `/solutions/fleet-mobility` | **Manquant** après scan | IMG-001 |
+| `/solutions/financement` | **Manquant** après scan (texte OK) | IMG-001 · visuel Alios / CFAO |
+
+Assets réellement manquants (scan) : photographie landscape hub · pièces · atelier · flotte · financement · logos constructeurs / wordmark PA.  
+Fallback verrouillé : typographie / cartes. **Ne pas générer d’images.** Un futur fichier n’entre en ligne qu’après scan + nouvelle entrée ici.

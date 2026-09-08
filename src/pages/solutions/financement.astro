@@ -1,0 +1,109 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { relatedSolutions, solutionSeo } from '../../data/solutions';
+
+const related = relatedSolutions('/solutions/financement').filter((item) =>
+  ['/solutions/vehicules', '/solutions/fleet-mobility'].includes(item.href)
+);
+---
+
+<SolutionLayout title={solutionSeo.financement.title} description={solutionSeo.financement.description}>
+  <Hero
+    eyebrow="Financement"
+    description="Solutions de financement associées aux équipements."
+    minHeight={false}
+    class="pa-sol-hero pa-sol-page-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions', href: '/solutions' },
+          { label: 'Financement' },
+        ]}
+      />
+      <h1 class="pa-display">Financement</h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/financement" variant="inverse-outline">Simuler mon financement</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Solution"
+        title="Financer les équipements"
+        intro="Page commerciale. Le détail des conditions n’est pas publié ici."
+      />
+      <div class="pa-sol-panel">
+        <p class="pa-body">
+          Solutions de financement associées aux équipements. Pour une simulation, l’outil dédié reste distinct de cette
+          page.
+        </p>
+        <div class="pa-cluster">
+          <Button href="/devis" variant="primary">Demander un devis</Button>
+          <Button href="/financement" variant="secondary">Simuler mon financement</Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Outil" title="Simuler mon financement" intro="Calculateur / simulation — parcours dédié." />
+      <div class="pa-grid pa-grid--2">
+        <FeatureCard
+          class="pa-sol-tool"
+          title="Simuler mon financement"
+          description="Calculateur / simulation."
+          href="/financement"
+        >
+          <span slot="icon" class="pa-mark" aria-hidden="true" />
+        </FeatureCard>
+        <FeatureCard
+          class="pa-sol-tool"
+          title="Demander un devis"
+          description="Conversion commerciale."
+          href="/devis"
+        >
+          <span slot="icon" class="pa-mark" aria-hidden="true" />
+        </FeatureCard>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Suite" title="Solutions associées" />
+      <div class="pa-grid pa-grid--2">
+        {
+          related.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

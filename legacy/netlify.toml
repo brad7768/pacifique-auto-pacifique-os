@@ -1,0 +1,51 @@
+# Déploiement Netlify — site statique (HTML / CSS / JS)
+# Dans l’UI Netlify : répertoire de publication = ce dossier (là où se trouve index.html).
+# Aucune commande de build nécessaire.
+
+[build]
+  publish = "."
+
+# URLs « propres » (sans .html) — les liens existants *.html restent valides
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 200
+
+[[redirects]]
+  from = "/marques"
+  to = "/marques.html"
+  status = 200
+
+[[redirects]]
+  from = "/a-propos"
+  to = "/a-propos.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/accueil"
+  to = "/index.html"
+  status = 200
+
+# En-têtes de base (sécurité + pas de cache agressif sur le HTML)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/main.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

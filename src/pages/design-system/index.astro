@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Button from '../../components/ui/Button.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Card from '../../components/ui/Card.astro';
+import Stat from '../../components/ui/Stat.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import BrandCard from '../../components/ui/BrandCard.astro';
+import IndustryCard from '../../components/ui/IndustryCard.astro';
+import VehicleCard from '../../components/ui/VehicleCard.astro';
+import ProjectCard from '../../components/ui/ProjectCard.astro';
+import ArticleCard from '../../components/ui/ArticleCard.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import FormField from '../../components/ui/FormField.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Hero from '../../components/ui/Hero.astro';
+---
+
+<!--
+  Internal design-system laboratory for Phase 1 validation.
+  Not a public marketing page.
+-->
+<BaseLayout
+  title="Design System"
+  description="Laboratoire de composants Pacifique Auto — validation Phase 1."
+  noindex={true}
+>
+  <Section tone="subtle" tight>
+    <Container>
+      <Breadcrumb
+        items={[
+          { label: 'Fondations', href: '/' },
+          { label: 'Design System' },
+        ]}
+      />
+      <SectionHeader
+        label="Système"
+        title="Composants de base"
+        intro="Tous les styles passent par les tokens. Cette page sert uniquement à la QA visuelle Phase 1."
+      />
+    </Container>
+  </Section>
+
+  <Hero
+    eyebrow="Référence visuelle"
+    title="Pacifique"
+    titleAccent="Auto"
+    lead="Des solutions qui font avancer l'Afrique Centrale"
+    description="Hero générique — pas le contenu homepage Phase 2. Image dérivée de l’asset legacy SINOTRUK HOHAN."
+    imageSrc="/assets/images/hero-sinotruk-hohan.jpg"
+    imageAlt="Camion SINOTRUK HOHAN 8x4"
+    minHeight={false}
+  >
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demande de devis</Button>
+      <Button href="/contact" variant="inverse-outline">Contact</Button>
+    </div>
+    <div slot="meta" class="pa-cluster" style="gap: var(--pa-space-9);">
+      <Stat value="30" suffix="+" label="Années d'expérience" />
+      <Stat value="5" label="Secteurs d'activité" />
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Actions" title="Buttons & badges" />
+      <div class="pa-cluster">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Badge>Accent</Badge>
+        <Badge variant="neutral">Neutral</Badge>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Cards" title="Feature · Brand · Industry" />
+      <div class="pa-grid pa-grid--3">
+        <FeatureCard
+          number="01"
+          title="Négoce International"
+          description="Bloc générique FeatureCard — contenu d’exemple pour QA tokens uniquement."
+          tags={['Import', 'Export']}
+        />
+        <BrandCard name="SINOTRUK" category="Camions" href="/marques/sinotruk" />
+        <IndustryCard title="BTP" description="IndustryCard générique" href="/industries/btp" />
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Catalogue" title="Vehicle · Project · Article" />
+      <div class="pa-grid pa-grid--3">
+        <VehicleCard
+          title="HOHAN 8×4"
+          model="SINOTRUK"
+          description="Asset legacy mappé — usage candidat Véhicules / SINOTRUK."
+          imageSrc="/assets/images/hero-sinotruk-hohan.jpg"
+          imageAlt="SINOTRUK HOHAN"
+          href="/solutions/vehicules"
+        />
+        <ProjectCard title="Chantier référence" location="Cameroun" description="ProjectCard générique." />
+        <ArticleCard title="Guide flotte" category="Ressources" excerpt="ArticleCard générique." />
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Formulaires" title="FormField" />
+      <Card>
+        <form class="pa-form-demo">
+          <div class="pa-grid pa-grid--2">
+            <FormField label="Prénom" name="prenom" required />
+            <FormField label="Email" name="email" type="email" required />
+          </div>
+          <FormField
+            label="Service"
+            name="service"
+            type="select"
+            options={['Véhicules', 'Pièces', 'Maintenance']}
+          />
+          <FormField label="Message" name="message" type="textarea" />
+        </form>
+      </Card>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Prêt pour un devis ?"
+    description="CTASection générique — pattern commercial réutilisable."
+    primaryLabel="Demande de devis"
+    primaryHref="/devis"
+    secondaryLabel="Espace client"
+    secondaryHref="/client/login"
+  />
+</BaseLayout>
+
+<style>
+  .pa-form-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-5);
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+interface Props {
+  value: string;
+  suffix?: string;
+  label: string;
+  inverse?: boolean;
+  class?: string;
+}
+const { value, suffix, label, inverse = true, class: className = '' } = Astro.props;
+---
+
+<div class:list={['pa-stat-block', inverse && 'pa-stat-block--inverse', className]}>
+  <div class="pa-stat">
+    {value}{suffix && <em>{suffix}</em>}
+  </div>
+  <div class="pa-stat-label">{label}</div>
+</div>
+
+<style>
+  .pa-stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-1);
+  }
+
+  .pa-stat em {
+    font-style: normal;
+    color: var(--pa-color-accent);
+  }
+
+  .pa-stat-block:not(.pa-stat-block--inverse) .pa-stat {
+    color: var(--pa-color-text);
+  }
+</style>

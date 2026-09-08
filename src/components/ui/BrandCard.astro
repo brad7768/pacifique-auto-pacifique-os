@@ -1,0 +1,60 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  name: string;
+  category?: string;
+  href?: string;
+  logoSrc?: string;
+  logoAlt?: string;
+  class?: string;
+}
+const { name, category, href, logoSrc, logoAlt = '', class: className = '' } = Astro.props;
+---
+
+<Card href={href} class:list={['pa-brand-card', className]}>
+  <div class="pa-brand-card__logo">
+    {logoSrc ? (
+      <img src={logoSrc} alt={logoAlt || name} loading="lazy" />
+    ) : (
+      <span class="pa-brand-card__fallback">{name.slice(0, 2)}</span>
+    )}
+  </div>
+  <h3 class="pa-h4">{name}</h3>
+  {category && <p class="pa-caption">{category}</p>}
+  <slot />
+</Card>
+
+<style>
+  .pa-brand-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--pa-space-3);
+  }
+
+  .pa-brand-card__logo {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: var(--pa-radius-md);
+    background: var(--pa-color-bg-subtle);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .pa-brand-card__logo img {
+    max-width: 70%;
+    max-height: 70%;
+    object-fit: contain;
+  }
+
+  .pa-brand-card__fallback {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-black);
+    font-size: 1.25rem;
+    color: var(--pa-color-primary);
+    letter-spacing: 0.05em;
+  }
+</style>

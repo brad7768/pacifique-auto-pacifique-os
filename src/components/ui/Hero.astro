@@ -1,0 +1,173 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleAccent?: string;
+  lead?: string;
+  description?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  variant?: 'dark' | 'subtle';
+  minHeight?: boolean;
+  class?: string;
+}
+const {
+  eyebrow,
+  title,
+  titleAccent,
+  lead,
+  description,
+  imageSrc,
+  imageAlt = '',
+  variant = 'dark',
+  minHeight = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<section class:list={['pa-hero', `pa-hero--${variant}`, minHeight && 'pa-hero--tall', className]}>
+  {imageSrc && (
+    <div class="pa-hero__media" aria-hidden={!imageAlt}>
+      <img class="pa-media--cover" src={imageSrc} alt={imageAlt} />
+      <div class="pa-hero__scrim"></div>
+    </div>
+  )}
+  <div class="pa-hero__accent" aria-hidden="true"></div>
+  <div class="pa-container pa-hero__content">
+    {eyebrow && (
+      <div class="pa-hero__eyebrow">
+        <span class="pa-hero__dot" aria-hidden="true"></span>
+        <span>{eyebrow}</span>
+      </div>
+    )}
+    <h1 class="pa-display">
+      {title}
+      {titleAccent && <em> {titleAccent}</em>}
+    </h1>
+    {lead && <p class="pa-lead pa-hero__lead">{lead}</p>}
+    {description && <p class="pa-body pa-hero__desc">{description}</p>}
+    <div class="pa-hero__actions pa-cluster">
+      <slot name="actions" />
+    </div>
+    <div class="pa-hero__meta">
+      <slot name="meta" />
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .pa-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-block: calc(var(--pa-header-height) + var(--pa-space-11)) var(--pa-space-11);
+    background: var(--pa-color-primary);
+  }
+
+  .pa-hero--tall {
+    min-height: 100vh;
+  }
+
+  .pa-hero--subtle {
+    background: var(--pa-color-bg-subtle);
+    min-height: 0;
+    padding-block: calc(var(--pa-header-height) + var(--pa-space-10)) var(--pa-space-10);
+  }
+
+  .pa-hero--subtle .pa-display {
+    color: var(--pa-color-text);
+  }
+
+  .pa-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pa-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+  }
+
+  .pa-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(9, 24, 58, 0.92) 0%, rgba(9, 24, 58, 0.55) 55%, rgba(9, 24, 58, 0.35) 100%);
+  }
+
+  .pa-hero__accent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(42vw, 28rem);
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(217, 26, 42, 0.18));
+    clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+  }
+
+  .pa-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 42.5rem;
+  }
+
+  .pa-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pa-space-3);
+    background: var(--pa-color-accent-muted);
+    border: var(--pa-border-width) solid var(--pa-color-accent-border);
+    padding: var(--pa-space-1) var(--pa-space-4);
+    border-radius: var(--pa-radius-xs);
+    margin-bottom: var(--pa-space-6);
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-semibold);
+    font-size: var(--pa-text-overline);
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+    color: var(--pa-color-accent-hot);
+  }
+
+  .pa-hero__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--pa-radius-pill);
+    background: var(--pa-color-accent-hot);
+  }
+
+  .pa-display em {
+    font-style: normal;
+    color: var(--pa-color-accent);
+  }
+
+  .pa-hero__lead {
+    margin-top: var(--pa-space-5);
+  }
+
+  .pa-hero__desc {
+    margin-top: var(--pa-space-5);
+    max-width: 32.5rem;
+  }
+
+  .pa-hero__actions {
+    margin-top: var(--pa-space-8);
+  }
+
+  .pa-hero__meta {
+    margin-top: var(--pa-space-10);
+  }
+
+  @media (max-width: 768px) {
+    .pa-hero__accent {
+      display: none;
+    }
+
+    .pa-hero--tall {
+      min-height: auto;
+    }
+  }
+</style>

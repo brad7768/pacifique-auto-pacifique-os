@@ -1,0 +1,31 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'default' | 'subtle' | 'inverse' | 'primary-mid';
+  tight?: boolean;
+  flush?: boolean;
+  class?: string;
+}
+const {
+  id,
+  tone = 'default',
+  tight = false,
+  flush = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'pa-section',
+    tone === 'subtle' && 'pa-section--subtle',
+    tone === 'inverse' && 'pa-section--inverse',
+    tone === 'primary-mid' && 'pa-section--primary-mid',
+    tight && 'pa-section--tight',
+    flush && 'pa-section--flush',
+    className,
+  ]}
+>
+  <slot />
+</section>

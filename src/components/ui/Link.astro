@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  external?: boolean;
+  muted?: boolean;
+}
+const { href, class: className = '', external = false, muted = false } = Astro.props;
+---
+
+<a
+  class:list={['pa-link', muted && 'pa-link--muted', className]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <slot />
+</a>
+
+<style>
+  .pa-link {
+    color: var(--pa-color-primary);
+    text-decoration: none;
+    transition: color var(--pa-duration) var(--pa-ease);
+  }
+
+  .pa-link:hover {
+    color: var(--pa-color-accent);
+  }
+
+  .pa-link--muted {
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-link--muted:hover {
+    color: var(--pa-color-text-inverse);
+  }
+</style>

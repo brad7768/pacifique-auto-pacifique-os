@@ -1,0 +1,117 @@
+---
+import type { NavItem } from '../../data/navigation';
+import { commercialActions } from '../../data/navigation';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  items: NavItem[];
+  currentPath?: string;
+}
+const { items, currentPath = '/' } = Astro.props;
+---
+
+<div class="pa-mobile-nav" id="mobile-nav" hidden data-mobile-nav>
+  <nav aria-label="Navigation mobile">
+    <ul class="pa-mobile-nav__list" role="list">
+      {
+        items.map((item) => (
+          <li class="pa-mobile-nav__group">
+            <a class="pa-mobile-nav__link" href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+            {item.children?.length ? (
+              <ul class="pa-mobile-nav__sub" role="list">
+                {item.children.map((child) => (
+                  <li>
+                    <a href={child.href}>{child.label}</a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="pa-mobile-nav__actions">
+    <Button href={commercialActions.primary.href} variant="primary" fullWidth>
+      {commercialActions.primary.label}
+    </Button>
+    <Button href={commercialActions.client.href} variant="inverse-outline" fullWidth>
+      {commercialActions.client.label}
+    </Button>
+  </div>
+</div>
+
+<style>
+  .pa-mobile-nav {
+    display: none;
+    position: fixed;
+    inset: var(--pa-header-height) 0 auto 0;
+    background: var(--pa-color-primary);
+    border-bottom: var(--pa-border-width-strong) solid var(--pa-color-accent);
+    padding: var(--pa-space-5) var(--pa-container-pad) var(--pa-space-7);
+    z-index: var(--pa-z-header);
+    max-height: calc(100vh - var(--pa-header-height));
+    overflow-y: auto;
+  }
+
+  .pa-mobile-nav.is-open {
+    display: block;
+  }
+
+  .pa-mobile-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-2);
+  }
+
+  .pa-mobile-nav__link {
+    display: block;
+    padding: var(--pa-space-3) 0;
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-bold);
+    font-size: 1.125rem;
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+    color: var(--pa-color-text-on-dark-muted);
+    text-decoration: none;
+    border-bottom: var(--pa-border-width) solid rgba(255, 255, 255, 0.06);
+  }
+
+  .pa-mobile-nav__link:hover,
+  .pa-mobile-nav__link[aria-current='page'] {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-mobile-nav__sub {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-1);
+    padding: var(--pa-space-2) 0 var(--pa-space-4) var(--pa-space-4);
+  }
+
+  .pa-mobile-nav__sub a {
+    color: var(--pa-color-text-muted);
+    text-decoration: none;
+    font-size: var(--pa-text-body-sm);
+    padding: var(--pa-space-2) 0;
+  }
+
+  .pa-mobile-nav__sub a:hover {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-mobile-nav__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-3);
+    margin-top: var(--pa-space-6);
+  }
+
+  @media (min-width: 1101px) {
+    .pa-mobile-nav {
+      display: none !important;
+    }
+  }
+</style>

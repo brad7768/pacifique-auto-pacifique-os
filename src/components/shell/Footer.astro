@@ -1,0 +1,215 @@
+---
+import { site } from '../../data/site';
+import {
+  footerQuickLinks,
+  footerSupportLinks,
+  footerLegalLinks,
+} from '../../data/navigation';
+import Logo from '../ui/Logo.astro';
+import Button from '../ui/Button.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="pa-footer">
+  <div class="pa-container pa-container--wide pa-footer__grid">
+    <div class="pa-footer__brand">
+      <Logo href="/" compact />
+      <p class="pa-footer__slogan">{site.slogan}</p>
+      <div class="pa-footer__social" aria-label="Réseaux sociaux">
+        <span class="pa-footer__social-note">LinkedIn · Facebook · YouTube · Instagram</span>
+        <p class="pa-caption">URLs sociales à brancher (voir MASTER_SPEC).</p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="pa-footer__title">Liens rapides</h2>
+      <ul class="pa-footer__links" role="list">
+        {footerQuickLinks.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="pa-footer__title">Support</h2>
+      <ul class="pa-footer__links" role="list">
+        {footerSupportLinks.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="pa-footer__title">Newsletter</h2>
+      <p class="pa-caption pa-footer__news-copy">Recevez les actualités flotte, pièces et projets.</p>
+      <form class="pa-footer__news" method="post" action="#" onsubmit="return false;">
+        <label class="pa-sr-only" for="newsletter-email">Votre email</label>
+        <input id="newsletter-email" type="email" name="email" placeholder="Votre email" required />
+        <Button type="submit" variant="primary" size="sm" aria-label="S'inscrire">→</Button>
+      </form>
+      <p class="pa-caption">Backend newsletter : Phase outils (non branché en Phase 1).</p>
+    </div>
+  </div>
+
+  <div class="pa-container pa-container--wide pa-footer__bottom">
+    <p class="pa-footer__copy">© {year} {site.legalName}. Tous droits réservés.</p>
+    <div class="pa-footer__legal">
+      {footerLegalLinks.map((l) => (
+        <a href={l.href}>{l.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pa-footer {
+    background: var(--pa-color-primary);
+    color: var(--pa-color-text-on-dark-muted);
+    padding-top: var(--pa-space-11);
+    position: relative;
+  }
+
+  .pa-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--pa-border-width-accent);
+    background: linear-gradient(90deg, var(--pa-color-accent) 0%, var(--pa-color-primary-soft) 100%);
+  }
+
+  .pa-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: var(--pa-space-9);
+    padding-bottom: var(--pa-space-9);
+  }
+
+  .pa-footer__slogan {
+    margin-top: var(--pa-space-4);
+    font-size: var(--pa-text-caption);
+    line-height: var(--pa-leading-relaxed);
+    max-width: 16rem;
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-footer__social {
+    margin-top: var(--pa-space-5);
+  }
+
+  .pa-footer__social-note {
+    font-family: var(--pa-font-display);
+    font-size: var(--pa-text-overline);
+    letter-spacing: var(--pa-tracking-wider);
+    text-transform: uppercase;
+    color: var(--pa-color-text-on-dark-muted);
+  }
+
+  .pa-footer__title {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-bold);
+    font-size: var(--pa-text-overline);
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+    color: var(--pa-color-text-inverse);
+    margin-bottom: var(--pa-space-5);
+  }
+
+  .pa-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-3);
+  }
+
+  .pa-footer__links a {
+    font-size: var(--pa-text-caption);
+    color: var(--pa-color-text-muted);
+    text-decoration: none;
+    transition: color var(--pa-duration) var(--pa-ease), padding-left var(--pa-duration) var(--pa-ease);
+  }
+
+  .pa-footer__links a::before {
+    content: '›';
+    color: var(--pa-color-accent);
+    margin-right: var(--pa-space-2);
+  }
+
+  .pa-footer__links a:hover {
+    color: var(--pa-color-text-inverse);
+    padding-left: 4px;
+  }
+
+  .pa-footer__news-copy {
+    margin-bottom: var(--pa-space-4);
+  }
+
+  .pa-footer__news {
+    display: flex;
+    gap: var(--pa-space-2);
+    margin-bottom: var(--pa-space-3);
+  }
+
+  .pa-footer__news input {
+    flex: 1;
+    min-width: 0;
+    padding: var(--pa-space-2) var(--pa-space-3);
+    border: var(--pa-border-width) solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--pa-radius-xs);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-footer__news input::placeholder {
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-footer__bottom {
+    border-top: var(--pa-border-width) solid var(--pa-color-border-on-dark);
+    padding-block: var(--pa-space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--pa-space-3);
+  }
+
+  .pa-footer__copy {
+    font-size: var(--pa-text-caption);
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pa-space-5);
+  }
+
+  .pa-footer__legal a {
+    font-size: var(--pa-text-caption);
+    color: var(--pa-color-text-muted);
+    text-decoration: none;
+  }
+
+  .pa-footer__legal a:hover {
+    color: var(--pa-color-text-inverse);
+  }
+
+  @media (max-width: 1100px) {
+    .pa-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pa-footer__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pa-footer__bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

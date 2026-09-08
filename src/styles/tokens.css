@@ -1,0 +1,168 @@
+/**
+ * PACIFIQUE AUTO — Design Tokens
+ * Source of truth for all UI. Components MUST use these variables.
+ *
+ * Derivation (Phase 1):
+ * - Primary / accent / neutrals: legacy site CSS (:root in styles.css)
+ * - Brand wordmark split + slogan: architecture visuelle mockup
+ * - Spacing / radii / shadows: measured from legacy component rules
+ * - Breakpoints: legacy media queries (1100 / 1024 / 768) + mobile drawer pattern
+ *
+ * Do NOT invent new brand colors. Page-level mockups may refine tokens later
+ * via DESIGN_SYSTEM.md + a documented changelog — never ad-hoc in components.
+ */
+
+:root {
+  /* ——— COLOR: PRIMARY (navy industrial) ——— */
+  --pa-color-primary: #09183a;
+  --pa-color-primary-mid: #0d2055;
+  --pa-color-primary-soft: #132770;
+  --pa-color-primary-rgb: 9, 24, 58;
+
+  /* ——— COLOR: SECONDARY (cool slate supporting navy) ——— */
+  --pa-color-secondary: #132770;
+  --pa-color-secondary-soft: #1a3380;
+
+  /* ——— COLOR: ACCENT (strategic red — not dominant UI fill) ——— */
+  --pa-color-accent: #d91a2a;
+  --pa-color-accent-hot: #ff2233;
+  --pa-color-accent-muted: rgba(217, 26, 42, 0.15);
+  --pa-color-accent-border: rgba(217, 26, 42, 0.4);
+  --pa-color-accent-rgb: 217, 26, 42;
+
+  /* ——— COLOR: BACKGROUND / SURFACE ——— */
+  --pa-color-bg: #ffffff;
+  --pa-color-bg-subtle: #f4f6fb;
+  --pa-color-bg-inverse: #09183a;
+  --pa-color-surface: #ffffff;
+  --pa-color-surface-elevated: #ffffff;
+  --pa-color-surface-inverse: #0d2055;
+
+  /* ——— COLOR: TEXT ——— */
+  --pa-color-text: #09183a;
+  --pa-color-text-inverse: #ffffff;
+  --pa-color-text-muted: #8a96b0;
+  --pa-color-text-on-dark-muted: #c8d0e4;
+
+  /* ——— COLOR: BORDER ——— */
+  --pa-color-border: #c8d0e4;
+  --pa-color-border-subtle: rgba(9, 24, 58, 0.08);
+  --pa-color-border-on-dark: rgba(255, 255, 255, 0.07);
+  --pa-color-border-strong: #09183a;
+
+  /* ——— COLOR: FEEDBACK ——— */
+  --pa-color-success: #27ae60;
+  --pa-color-warning: #d68910;
+  --pa-color-error: #d91a2a;
+
+  /* ——— COLOR: EXTERNAL (WhatsApp — channel only, not brand) ——— */
+  --pa-color-whatsapp: #25d366;
+
+  /* ——— TYPOGRAPHY FAMILIES ——— */
+  --pa-font-display: 'Barlow Condensed', sans-serif;
+  --pa-font-body: 'Barlow', sans-serif;
+
+  /* ——— TYPE SCALE ——— */
+  --pa-text-display: clamp(3.25rem, 8vw, 6rem); /* H1 hero ~52–96px */
+  --pa-text-h1: clamp(2.5rem, 5vw, 3.625rem); /* page H1 / section ~40–58px */
+  --pa-text-h2: clamp(2rem, 4vw, 2.75rem); /* ~32–44px */
+  --pa-text-h3: 1.3125rem; /* 21px — service-title */
+  --pa-text-h4: 1.0625rem; /* 17px — pillar-title */
+  --pa-text-lead: clamp(1.0625rem, 2.2vw, 1.5rem); /* tagline */
+  --pa-text-body: 1rem; /* 16px */
+  --pa-text-body-sm: 0.875rem; /* 14px */
+  --pa-text-caption: 0.8125rem; /* 13px */
+  --pa-text-overline: 0.75rem; /* 12px section labels / nav */
+  --pa-text-micro: 0.6875rem; /* 11px */
+  --pa-text-stat: 2.625rem; /* 42px hero stats */
+  --pa-text-stat-lg: 3rem; /* 48px metric */
+  --pa-text-stat-xl: 4.5rem; /* 72px decorative nums */
+
+  --pa-weight-light: 300;
+  --pa-weight-regular: 400;
+  --pa-weight-medium: 500;
+  --pa-weight-semibold: 600;
+  --pa-weight-bold: 700;
+  --pa-weight-extrabold: 800;
+  --pa-weight-black: 900;
+
+  --pa-leading-none: 0.95;
+  --pa-leading-tight: 1;
+  --pa-leading-snug: 1.1;
+  --pa-leading-normal: 1.5;
+  --pa-leading-relaxed: 1.75;
+
+  --pa-tracking-tight: -0.03125rem;
+  --pa-tracking-display: -0.0625rem;
+  --pa-tracking-normal: 0;
+  --pa-tracking-wide: 0.0625rem;
+  --pa-tracking-wider: 0.09375rem; /* ~1.5px @16 */
+  --pa-tracking-widest: 0.1875rem; /* 3px */
+  --pa-tracking-section: 0.25rem; /* 4px */
+
+  /* ——— SPACING (4px base) ——— */
+  --pa-space-0: 0;
+  --pa-space-1: 0.25rem; /* 4 */
+  --pa-space-2: 0.5rem; /* 8 */
+  --pa-space-3: 0.75rem; /* 12 */
+  --pa-space-4: 1rem; /* 16 */
+  --pa-space-5: 1.25rem; /* 20 */
+  --pa-space-6: 1.5rem; /* 24 */
+  --pa-space-7: 2rem; /* 32 */
+  --pa-space-8: 2.5rem; /* 40 */
+  --pa-space-9: 3rem; /* 48 */
+  --pa-space-10: 4rem; /* 64 */
+  --pa-space-11: 5rem; /* 80 */
+  --pa-space-12: 6.25rem; /* 100 — section padding */
+
+  /* ——— LAYOUT ——— */
+  --pa-container-max: 75rem; /* 1200px content max */
+  --pa-container-wide: 87.5rem; /* 1400px shell */
+  --pa-container-pad: 5%; /* legacy horizontal rhythm */
+  --pa-header-height: 4.5rem; /* 72px */
+  --pa-teaser-height: 2.25rem; /* ~36px when teaser present */
+  --pa-section-pad-y: var(--pa-space-12);
+  --pa-section-pad-y-sm: var(--pa-space-10);
+  --pa-grid-gap: var(--pa-space-6);
+  --pa-grid-gap-tight: 2px; /* legacy service grid */
+
+  /* ——— RADIUS ——— */
+  --pa-radius-none: 0;
+  --pa-radius-xs: 2px;
+  --pa-radius-sm: 3px;
+  --pa-radius-md: 4px;
+  --pa-radius-pill: 999px;
+
+  /* ——— BORDERS ——— */
+  --pa-border-width: 1px;
+  --pa-border-width-strong: 2px;
+  --pa-border-width-accent: 3px;
+
+  /* ——— SHADOWS (from legacy hover/footer patterns) ——— */
+  --pa-shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --pa-shadow-md: 0 4px 40px rgba(9, 24, 58, 0.08);
+  --pa-shadow-lg: 0 8px 32px rgba(9, 24, 58, 0.1);
+  --pa-shadow-xl: 0 16px 56px rgba(9, 24, 58, 0.12);
+  --pa-shadow-nav: 0 4px 32px rgba(217, 26, 42, 0.25);
+  --pa-shadow-accent: 0 8px 28px rgba(217, 26, 42, 0.4);
+
+  /* ——— Z-INDEX ——— */
+  --pa-z-base: 1;
+  --pa-z-header: 999;
+  --pa-z-overlay: 1000;
+  --pa-z-float: 9999;
+
+  /* ——— MOTION ——— */
+  --pa-ease: ease;
+  --pa-duration-fast: 150ms;
+  --pa-duration: 200ms;
+  --pa-duration-med: 300ms;
+  --pa-duration-slow: 400ms;
+
+  /* ——— BREAKPOINTS (reference; use in @media) ——— */
+  /* sm: 768px | md: 1024px | lg: 1100px | xl: 1280px */
+  --pa-bp-sm: 768px;
+  --pa-bp-md: 1024px;
+  --pa-bp-lg: 1100px;
+  --pa-bp-xl: 1280px;
+}

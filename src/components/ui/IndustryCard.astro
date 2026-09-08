@@ -1,0 +1,62 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  class?: string;
+}
+const { title, description, href, imageSrc, imageAlt = '', class: className = '' } = Astro.props;
+---
+
+<Card href={href} padded={false} class:list={['pa-industry-card', className]}>
+  <div class="pa-industry-card__media">
+    {imageSrc ? (
+      <img src={imageSrc} alt={imageAlt} class="pa-media--cover" loading="lazy" />
+    ) : (
+      <div class="pa-industry-card__placeholder" aria-hidden="true"></div>
+    )}
+    <div class="pa-industry-card__overlay">
+      <h3 class="pa-h3 pa-text-inverse">{title}</h3>
+      {description && <p class="pa-caption pa-industry-card__desc">{description}</p>}
+    </div>
+  </div>
+  <slot />
+</Card>
+
+<style>
+  .pa-industry-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--pa-color-primary);
+    overflow: hidden;
+  }
+
+  .pa-industry-card__media img,
+  .pa-industry-card__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pa-industry-card__placeholder {
+    background: linear-gradient(135deg, var(--pa-color-primary), var(--pa-color-primary-soft));
+  }
+
+  .pa-industry-card__overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: var(--pa-space-5);
+    background: linear-gradient(transparent, rgba(9, 24, 58, 0.92));
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-2);
+  }
+
+  .pa-industry-card__desc {
+    color: var(--pa-color-text-on-dark-muted);
+  }
+</style>

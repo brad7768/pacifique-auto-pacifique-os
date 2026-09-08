@@ -1,0 +1,12 @@
+---
+interface Props {
+  wide?: boolean;
+  class?: string;
+  as?: 'div' | 'section' | 'article';
+}
+const { wide = false, class: className = '', as: Tag = 'div' } = Astro.props;
+---
+
+<Tag class:list={['pa-container', wide && 'pa-container--wide', className]}>
+  <slot />
+</Tag>

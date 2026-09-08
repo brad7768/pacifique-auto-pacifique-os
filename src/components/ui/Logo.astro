@@ -1,0 +1,106 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  compact?: boolean;
+  inverse?: boolean;
+}
+const { href = '/', class: className = '', compact = false, inverse = false } = Astro.props;
+---
+
+<a class:list={['pa-logo', compact && 'pa-logo--compact', inverse && 'pa-logo--inverse', className]} href={href} aria-label="Pacifique Auto — Accueil">
+  <span class="pa-logo__mark" aria-hidden="true">PA</span>
+  <span class="pa-logo__text">
+    <span class="pa-logo__name">
+      <span class="pa-logo__pacifique">Pacifique</span>
+      <span class="pa-logo__auto">Auto</span>
+    </span>
+    {!compact && <span class="pa-logo__slogan">Des solutions qui font avancer l'Afrique Centrale</span>}
+  </span>
+</a>
+
+<style>
+  .pa-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pa-space-3);
+    text-decoration: none;
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-logo__mark {
+    width: 2.75rem;
+    height: 2.75rem;
+    background: var(--pa-color-accent);
+    border-radius: var(--pa-radius-md);
+    display: grid;
+    place-items: center;
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-black);
+    font-size: 1.375rem;
+    color: var(--pa-color-text-inverse);
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+
+  .pa-logo__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .pa-logo__name {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-extrabold);
+    font-size: 1.25rem;
+    letter-spacing: 0.0625rem;
+    line-height: var(--pa-leading-snug);
+  }
+
+  .pa-logo__pacifique {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-logo__auto {
+    color: var(--pa-color-accent);
+    margin-left: 0.25rem;
+  }
+
+  .pa-logo__slogan {
+    font-family: var(--pa-font-body);
+    font-weight: var(--pa-weight-light);
+    font-size: 0.625rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--pa-color-text-on-dark-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 16rem;
+  }
+
+  .pa-logo--compact .pa-logo__mark {
+    width: 2.375rem;
+    height: 2.375rem;
+    font-size: 1.125rem;
+  }
+
+  .pa-logo--compact .pa-logo__name {
+    font-size: 1.0625rem;
+  }
+
+  .pa-logo--inverse .pa-logo__pacifique {
+    color: var(--pa-color-primary);
+  }
+
+  .pa-logo--inverse .pa-logo__slogan {
+    color: var(--pa-color-text-muted);
+  }
+
+  @media (max-width: 1100px) {
+    .pa-logo__slogan {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  variant?: 'accent' | 'neutral' | 'inverse';
+  class?: string;
+}
+const { variant = 'accent', class: className = '' } = Astro.props;
+---
+
+<span class:list={['pa-badge', `pa-badge--${variant}`, className]}>
+  <slot />
+</span>
+
+<style>
+  .pa-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pa-space-2);
+    padding: var(--pa-space-1) var(--pa-space-4);
+    border-radius: var(--pa-radius-xs);
+    font-family: var(--pa-font-display);
+    font-size: var(--pa-text-overline);
+    font-weight: var(--pa-weight-semibold);
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+  }
+
+  .pa-badge--accent {
+    background: var(--pa-color-accent-muted);
+    border: var(--pa-border-width) solid var(--pa-color-accent-border);
+    color: var(--pa-color-accent-hot);
+  }
+
+  .pa-badge--neutral {
+    background: var(--pa-color-bg-subtle);
+    border: var(--pa-border-width) solid var(--pa-color-border);
+    color: var(--pa-color-text);
+  }
+
+  .pa-badge--inverse {
+    background: rgba(255, 255, 255, 0.08);
+    border: var(--pa-border-width) solid rgba(255, 255, 255, 0.2);
+    color: var(--pa-color-text-on-dark-muted);
+  }
+</style>

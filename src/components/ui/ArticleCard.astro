@@ -1,0 +1,37 @@
+---
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  title: string;
+  excerpt?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  date?: string;
+  category?: string;
+  class?: string;
+}
+const {
+  title,
+  excerpt,
+  href,
+  imageSrc,
+  imageAlt = '',
+  date,
+  category,
+  class: className = '',
+} = Astro.props;
+const meta = [category, date].filter(Boolean).join(' · ') || 'Article';
+---
+
+<ProductCard
+  title={title}
+  description={excerpt}
+  href={href}
+  imageSrc={imageSrc}
+  imageAlt={imageAlt}
+  meta={meta}
+  class:list={['pa-article-card', className]}
+>
+  <slot />
+</ProductCard>

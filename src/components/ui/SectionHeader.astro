@@ -1,0 +1,68 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  intro?: string;
+  inverse?: boolean;
+  align?: 'start' | 'center';
+  class?: string;
+}
+const {
+  label,
+  title,
+  intro,
+  inverse = false,
+  align = 'start',
+  class: className = '',
+} = Astro.props;
+---
+
+<header class:list={['pa-section-header', `pa-section-header--${align}`, inverse && 'pa-section-header--inverse', className]}>
+  {label && (
+    <div class="pa-section-header__label">
+      <span class="pa-section-header__line" aria-hidden="true"></span>
+      <span class="pa-overline">{label}</span>
+    </div>
+  )}
+  <h2 class:list={['pa-h2', inverse && 'pa-text-inverse']}>{title}</h2>
+  {intro && <p class:list={['pa-body', 'pa-section-header__intro', inverse && 'pa-section-header__intro--inverse']}>{intro}</p>}
+  <slot />
+</header>
+
+<style>
+  .pa-section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-4);
+    margin-bottom: var(--pa-space-10);
+  }
+
+  .pa-section-header--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .pa-section-header__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pa-space-3);
+  }
+
+  .pa-section-header__line {
+    width: 2rem;
+    height: 2px;
+    background: var(--pa-color-accent);
+  }
+
+  .pa-section-header__intro {
+    max-width: 36.25rem;
+  }
+
+  .pa-section-header--center .pa-section-header__intro {
+    margin-inline: auto;
+  }
+
+  .pa-section-header__intro--inverse {
+    color: var(--pa-color-text-on-dark-muted);
+  }
+</style>

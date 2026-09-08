@@ -1,0 +1,186 @@
+---
+import type { NavItem } from '../../data/navigation';
+
+interface Props {
+  items: NavItem[];
+  currentPath?: string;
+}
+const { items, currentPath = '/' } = Astro.props;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<div class="pa-mega" data-mega-root>
+  {
+    items.map((item) => (
+      <div class="pa-mega__item" data-has-children={Boolean(item.children?.length)}>
+        <a
+          class:list={['pa-mega__trigger', 'pa-nav-label', isActive(item.href) && 'is-active']}
+          href={item.href}
+          aria-expanded={item.children?.length ? 'false' : undefined}
+          data-mega-trigger
+        >
+          {item.label}
+          {item.children?.length ? (
+            <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          ) : null}
+        </a>
+        {item.children?.length ? (
+          <div class="pa-mega__panel" hidden data-mega-panel>
+            <ul class="pa-mega__list" role="list">
+              <li>
+                <a class="pa-mega__overview" href={item.href}>
+                  Voir tout — {item.label}
+                </a>
+              </li>
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    class:list={['pa-mega__link', isActive(child.href) && 'is-active']}
+                    href={child.href}
+                  >
+                    <span class="pa-mega__link-label">{child.label}</span>
+                    <span class="pa-mega__link-path">{child.href}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .pa-mega {
+    display: flex;
+    align-items: stretch;
+    gap: var(--pa-space-1);
+    height: 100%;
+  }
+
+  .pa-mega__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .pa-mega__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pa-space-2);
+    padding: var(--pa-space-2) var(--pa-space-3);
+    color: var(--pa-color-text-on-dark-muted);
+    text-decoration: none;
+    height: 100%;
+    transition: color var(--pa-duration) var(--pa-ease);
+  }
+
+  .pa-mega__trigger:hover,
+  .pa-mega__trigger.is-active,
+  .pa-mega__item:focus-within .pa-mega__trigger {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-mega__panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 16rem;
+    background: var(--pa-color-primary);
+    border: var(--pa-border-width) solid rgba(255, 255, 255, 0.08);
+    border-top: var(--pa-border-width-strong) solid var(--pa-color-accent);
+    box-shadow: var(--pa-shadow-lg);
+    padding: var(--pa-space-3);
+    z-index: var(--pa-z-overlay);
+  }
+
+  .pa-mega__list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pa-mega__overview,
+  .pa-mega__link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--pa-space-3);
+    text-decoration: none;
+    border-radius: var(--pa-radius-xs);
+    transition: background var(--pa-duration) var(--pa-ease);
+  }
+
+  .pa-mega__overview {
+    font-family: var(--pa-font-display);
+    font-size: var(--pa-text-overline);
+    font-weight: var(--pa-weight-bold);
+    letter-spacing: var(--pa-tracking-wider);
+    text-transform: uppercase;
+    color: var(--pa-color-accent);
+  }
+
+  .pa-mega__link-label {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-semibold);
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-mega__link-path {
+    font-size: var(--pa-text-micro);
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-mega__link:hover,
+  .pa-mega__overview:hover,
+  .pa-mega__link.is-active {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  @media (max-width: 1100px) {
+    .pa-mega {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initMega() {
+    document.querySelectorAll('[data-mega-root]').forEach((root) => {
+      root.querySelectorAll('.pa-mega__item').forEach((item) => {
+        const trigger = item.querySelector('[data-mega-trigger]');
+        const panel = item.querySelector('[data-mega-panel]');
+        if (!(trigger instanceof HTMLElement) || !(panel instanceof HTMLElement)) return;
+
+        const open = () => {
+          panel.hidden = false;
+          trigger.setAttribute('aria-expanded', 'true');
+        };
+        const close = () => {
+          panel.hidden = true;
+          trigger.setAttribute('aria-expanded', 'false');
+        };
+
+        item.addEventListener('mouseenter', open);
+        item.addEventListener('mouseleave', close);
+        trigger.addEventListener('focus', open);
+        item.addEventListener('focusout', (e) => {
+          if (!item.contains(e.relatedTarget as Node)) close();
+        });
+      });
+    });
+  }
+
+  initMega();
+  document.addEventListener('astro:page-load', initMega);
+</script>

@@ -41,7 +41,7 @@ IMG-001 n’est **pas** un filler universel.
 | Ratio d’usage recommandé | Card 16:10 (crop depuis portrait) |
 | Crop desktop | Cabine + benne, centre |
 | Crop mobile | Cabine serrée |
-| **Interdit** | Hero homepage par défaut · **hero `/solutions`** · industries hors transport lourd · filler S2–S10 · Pièces / Maintenance / Fleet / Financement |
+| **Interdit** | Hero homepage par défaut · **hero `/solutions`** · **hero `/industries` et leafs industries** (filler secteur) · industries hors transport lourd · filler S2–S10 · Pièces / Maintenance / Fleet / Financement |
 
 ### IMG-002 — Architecture visuelle
 
@@ -132,3 +132,21 @@ Rescan arbitrage : mêmes fichiers que §1. Aucun asset nouveau. Aucune image Al
 
 Assets réellement manquants (scan) : photographie landscape hub · pièces · atelier · flotte · financement · logos constructeurs / wordmark PA.  
 Fallback verrouillé : typographie / cartes. **Ne pas générer d’images.** Un futur fichier n’entre en ligne qu’après scan + nouvelle entrée ici.
+
+---
+
+## 6. Usage Industries (Phase 4A)
+
+Source : `INDUSTRIES_MASTER_SPEC.md` §10.  
+Rescan 4A : mêmes fichiers que §1. Aucun chantier / mine / agriculture / énergie / flotte landscape.
+
+| Page | Image autorisée | Interdit |
+|------|-----------------|----------|
+| `/industries` hero | **Aucune photo.** Navy + typographie | IMG-001 · image générée |
+| Cartes hub 5 secteurs | Placeholder `IndustryCard` (navy 4:3) | IMG-001 filler |
+| `/industries/btp` · `mines` · `agriculture` · `energie` | **Manquant** — navy / typo | IMG-001 |
+| `/industries/transport` | **Manquant** pour le secteur. IMG-001 **seulement** si carte solution Véhicules réutilisée | IMG-001 en hero industrie |
+| Hub S4 carte Véhicules | IMG-001 (même règle Solutions / homepage S3) | Fond des 4 autres secteurs |
+
+Manquants sectoriels (scan) : BTP/chantier · mines/carrière · transport landscape · agriculture · énergie/infrastructures.  
+Ne pas générer d’images. Ne pas déclarer un asset présent hors cette liste.

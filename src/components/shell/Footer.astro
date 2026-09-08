@@ -9,6 +9,7 @@ import Logo from '../ui/Logo.astro';
 import Button from '../ui/Button.astro';
 
 const year = new Date().getFullYear();
+const whatsappHref = `https://wa.me/${site.contact.whatsapp}`;
 ---
 
 <footer class="pa-footer">
@@ -16,9 +17,13 @@ const year = new Date().getFullYear();
     <div class="pa-footer__brand">
       <Logo href="/" compact />
       <p class="pa-footer__slogan">{site.slogan}</p>
-      <div class="pa-footer__social" aria-label="Réseaux sociaux">
+      <p class="pa-caption pa-footer__coords">
+        {site.contact.address}<br />
+        {site.contact.phoneDisplay.join(' · ')}<br />
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+      </p>
+      <div class="pa-footer__social">
         <span class="pa-footer__social-note">LinkedIn · Facebook · YouTube · Instagram</span>
-        <p class="pa-caption">URLs sociales à brancher (voir MASTER_SPEC).</p>
       </div>
     </div>
 
@@ -37,18 +42,21 @@ const year = new Date().getFullYear();
         {footerSupportLinks.map((l) => (
           <li><a href={l.href}>{l.label}</a></li>
         ))}
+        <li>
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </li>
       </ul>
     </div>
 
     <div>
       <h2 class="pa-footer__title">Newsletter</h2>
-      <p class="pa-caption pa-footer__news-copy">Recevez les actualités flotte, pièces et projets.</p>
+      <p class="pa-caption pa-footer__news-copy">Actualités flotte, pièces et projets.</p>
       <form class="pa-footer__news" method="post" action="#" onsubmit="return false;">
         <label class="pa-sr-only" for="newsletter-email">Votre email</label>
         <input id="newsletter-email" type="email" name="email" placeholder="Votre email" required />
         <Button type="submit" variant="primary" size="sm" aria-label="S'inscrire">→</Button>
       </form>
-      <p class="pa-caption">Backend newsletter : Phase outils (non branché en Phase 1).</p>
+      <p class="pa-caption">L’inscription sera activée ultérieurement.</p>
     </div>
   </div>
 
@@ -93,6 +101,20 @@ const year = new Date().getFullYear();
     line-height: var(--pa-leading-relaxed);
     max-width: 16rem;
     color: var(--pa-color-text-muted);
+  }
+
+  .pa-footer__coords {
+    margin-top: var(--pa-space-4);
+    max-width: 16rem;
+  }
+
+  .pa-footer__coords a {
+    color: var(--pa-color-text-on-dark-muted);
+    text-decoration: none;
+  }
+
+  .pa-footer__coords a:hover {
+    color: var(--pa-color-accent);
   }
 
   .pa-footer__social {

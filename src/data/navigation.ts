@@ -87,8 +87,15 @@ export const primaryNav: NavItem[] = [
   },
 ];
 
+/** Fine utility strip — not a second navbar. Routes from ROUTE_MAP. */
+export const utilityStrip = [
+  { label: 'Véhicules', href: '/solutions/vehicules' },
+  { label: 'Pièces & Services', href: '/solutions/pieces-services' },
+  { label: 'Projets', href: '/projets' },
+] as const;
+
 export const commercialActions = {
-  primary: { label: 'Demande de devis', href: '/devis' },
+  primary: { label: 'Demander un devis', href: '/devis' },
   secondary: { label: 'Nous contacter', href: '/contact' },
   client: { label: 'Espace client', href: '/client/login' },
   search: { label: 'Recherche', href: '/recherche' },

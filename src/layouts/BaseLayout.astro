@@ -9,12 +9,14 @@ interface Props {
   description?: string;
   currentPath?: string;
   noindex?: boolean;
+  flushChrome?: boolean;
 }
 const {
   title = site.name,
   description = site.slogan,
   currentPath = Astro.url.pathname,
   noindex = false,
+  flushChrome = false,
 } = Astro.props;
 const pageTitle = title === site.name ? site.name : `${title} — ${site.name}`;
 ---
@@ -39,7 +41,7 @@ const pageTitle = title === site.name ? site.name : `${title} — ${site.name}`;
   <body>
     <a class="pa-skip-link" href="#main">Aller au contenu</a>
     <Header currentPath={currentPath} />
-    <main id="main" class="pa-main pa-main--with-header">
+    <main id="main" class:list={['pa-main', flushChrome ? 'pa-main--flush-chrome' : 'pa-main--with-header']}>
       <slot />
     </main>
     <Footer />

@@ -1,7 +1,7 @@
 ---
 interface Props {
   eyebrow?: string;
-  title: string;
+  title?: string;
   titleAccent?: string;
   lead?: string;
   description?: string;
@@ -40,10 +40,14 @@ const {
         <span>{eyebrow}</span>
       </div>
     )}
-    <h1 class="pa-display">
-      {title}
-      {titleAccent && <em> {titleAccent}</em>}
-    </h1>
+    {Astro.slots.has('heading') ? (
+      <slot name="heading" />
+    ) : (
+      <h1 class="pa-display">
+        {title}
+        {titleAccent && <em> {titleAccent}</em>}
+      </h1>
+    )}
     {lead && <p class="pa-lead pa-hero__lead">{lead}</p>}
     {description && <p class="pa-body pa-hero__desc">{description}</p>}
     <div class="pa-hero__actions pa-cluster">
@@ -62,7 +66,7 @@ const {
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding-block: calc(var(--pa-header-height) + var(--pa-space-11)) var(--pa-space-11);
+    padding-block: calc(var(--pa-chrome-height) + var(--pa-space-11)) var(--pa-space-11);
     background: var(--pa-color-primary);
   }
 
@@ -73,7 +77,7 @@ const {
   .pa-hero--subtle {
     background: var(--pa-color-bg-subtle);
     min-height: 0;
-    padding-block: calc(var(--pa-header-height) + var(--pa-space-10)) var(--pa-space-10);
+    padding-block: calc(var(--pa-chrome-height) + var(--pa-space-10)) var(--pa-space-10);
   }
 
   .pa-hero--subtle .pa-display {
@@ -112,7 +116,7 @@ const {
   .pa-hero__content {
     position: relative;
     z-index: 2;
-    max-width: 42.5rem;
+    max-width: 46rem;
   }
 
   .pa-hero__eyebrow {

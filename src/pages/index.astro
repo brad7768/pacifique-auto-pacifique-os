@@ -36,8 +36,9 @@ import {
     class="pa-home-hero"
   >
     <h1 slot="heading" class="pa-display">
-      DES SOLUTIONS QUI FONT AVANCER<br />
-      <em>L’AFRIQUE CENTRALE.</em>
+      <span>DES SOLUTIONS QUI FONT</span>
+      <span>AVANCER L’AFRIQUE</span>
+      <em>CENTRALE.</em>
     </h1>
     <div slot="actions" class="pa-cluster pa-home-cta">
       <Button href="/devis" variant="primary">Demander un devis</Button>
@@ -56,7 +57,7 @@ import {
       <div class="pa-grid pa-grid--auto">
         {
           homeHubs.map((hub) => (
-            <FeatureCard title={hub.title} description={hub.description} href={hub.href}>
+            <FeatureCard class="pa-hub-card" title={hub.title} description={hub.description} href={hub.href}>
               <span slot="icon" class="pa-mark" aria-hidden="true" />
             </FeatureCard>
           ))
@@ -73,7 +74,7 @@ import {
         title="Solutions"
         intro="Véhicules, pièces, maintenance, flotte et financement."
       />
-      <div class="pa-grid pa-grid--3">
+      <div class="pa-grid pa-grid--3 pa-solutions-grid">
         {
           homeSolutions.map((item) =>
             'useVehicleCard' in item && item.useVehicleCard ? (
@@ -84,9 +85,10 @@ import {
                 imageSrc={item.imageSrc}
                 imageAlt={item.imageAlt}
                 model="Véhicules"
+                class="pa-solution-card"
               />
             ) : (
-              <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <FeatureCard class="pa-solution-card" title={item.title} description={item.description} href={item.href}>
                 <span slot="icon" class="pa-mark" aria-hidden="true" />
                 {'secondary' in item && item.secondary ? (
                   <p class="pa-solution-secondary">
@@ -112,7 +114,7 @@ import {
       <div class="pa-grid pa-grid--5">
         {
           homeIndustries.map((item) => (
-            <IndustryCard title={item.title} description={item.description} href={item.href} />
+            <IndustryCard class="pa-industry-homecard" title={item.title} description={item.description} href={item.href} />
           ))
         }
       </div>
@@ -128,7 +130,7 @@ import {
     <Container>
       <SectionHeader label="Catalogue" title="Marques" intro="Constructeurs et références au catalogue." />
       <div class="pa-grid pa-grid--4">
-        {homeBrands.map((brand) => <BrandCard name={brand.name} href={brand.href} />)}
+        {homeBrands.map((brand) => <BrandCard class="pa-brand-homecard" name={brand.name} href={brand.href} />)}
       </div>
       <div class="pa-cluster pa-home-section-cta">
         <Button href="/marques" variant="outline">Toutes les marques</Button>
@@ -175,8 +177,7 @@ import {
       />
       <div class="pa-projects-state">
         <p class="pa-body">
-          Les réalisations et études de cas validées seront présentées ici. En attendant, l’espace Projets
-          rassemble l’architecture de cette offre.
+          Sélection de réalisations en cours de préparation.
         </p>
         <Button href="/projets" variant="secondary">Tous les projets</Button>
       </div>
@@ -190,7 +191,7 @@ import {
       <div class="pa-grid pa-grid--3">
         {
           homeNetwork.map((item) => (
-            <FeatureCard title={item.title} description={item.description} href={item.href}>
+            <FeatureCard class="pa-network-card" title={item.title} description={item.description} href={item.href}>
               <span slot="icon" class="pa-mark" aria-hidden="true" />
             </FeatureCard>
           ))
@@ -210,7 +211,7 @@ import {
       <div class="pa-grid pa-grid--3">
         {
           homeResources.map((item) => (
-            <ArticleCard title={item.title} excerpt={item.excerpt} href={item.href} category={item.title} />
+            <ArticleCard class="pa-resource-card" title={item.title} excerpt={item.excerpt} href={item.href} category={item.title} />
           ))
         }
       </div>
@@ -231,20 +232,133 @@ import {
   />
 </BaseLayout>
 
-<style>
-  .pa-home-hero :global(.pa-display) {
-    max-width: 16ch;
+<style is:global>
+  .pa-home-hero .pa-display {
+    max-width: none;
+    font-size: clamp(3.5rem, 5.25vw, 4.6rem);
+    line-height: 0.9;
+    letter-spacing: var(--pa-tracking-display);
+  }
+
+  .pa-home-hero .pa-display span,
+  .pa-home-hero .pa-display em {
+    display: block;
+    font-style: normal;
+  }
+
+  .pa-home-hero .pa-hero__content {
+    max-width: 52rem;
+  }
+
+  .pa-home-hero .pa-hero__desc {
+    max-width: 34rem;
+    color: var(--pa-color-text-on-dark-muted);
+  }
+
+  .pa-home-hero .pa-hero__eyebrow {
+    margin-bottom: var(--pa-space-7);
+  }
+
+  .pa-home-hero .pa-hero__actions {
+    margin-top: var(--pa-space-9);
   }
 
   .pa-mark {
     display: block;
-    width: 1.5rem;
-    height: 2px;
+    width: var(--pa-space-7);
+    height: var(--pa-border-width-accent);
     background: var(--pa-color-accent);
   }
 
   .pa-home-section-cta {
     margin-top: var(--pa-space-8);
+  }
+
+  .pa-hub-card,
+  .pa-network-card,
+  .pa-solution-card,
+  .pa-brand-homecard,
+  .pa-resource-card {
+    border: var(--pa-border-width) solid var(--pa-color-border-subtle);
+  }
+
+  .pa-hub-card {
+    min-height: 13.5rem;
+    padding: var(--pa-space-8) var(--pa-space-7);
+  }
+
+  .pa-hub-card .pa-feature-card__icon {
+    width: var(--pa-space-9);
+    height: var(--pa-space-9);
+    margin-bottom: var(--pa-space-6);
+    background: var(--pa-color-bg-subtle);
+  }
+
+  .pa-hub-card .pa-h3 {
+    font-size: 1.5rem;
+  }
+
+  .pa-hub-card .pa-body,
+  .pa-network-card .pa-body {
+    color: var(--pa-color-text-muted);
+  }
+
+  .pa-solutions-grid .pa-card {
+    height: 100%;
+  }
+
+  .pa-solution-card {
+    min-height: 18.5rem;
+  }
+
+  .pa-solution-card .pa-product-card__body {
+    min-height: 11.5rem;
+  }
+
+  .pa-industry-homecard {
+    min-height: 14rem;
+    border: var(--pa-border-width) solid var(--pa-color-primary-soft);
+  }
+
+  .pa-industry-homecard .pa-industry-card__media {
+    min-height: 14rem;
+    height: 100%;
+  }
+
+  .pa-industry-homecard .pa-industry-card__overlay {
+    padding: var(--pa-space-5);
+  }
+
+  .pa-industry-homecard .pa-h3 {
+    font-size: 1.25rem;
+  }
+
+  .pa-brand-homecard {
+    min-height: 11rem;
+    justify-content: center;
+    padding: var(--pa-space-7);
+  }
+
+  .pa-brand-homecard .pa-brand-card__logo {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .pa-network-card {
+    min-height: 14.5rem;
+  }
+
+  .pa-network-card .pa-feature-card__icon {
+    margin-bottom: var(--pa-space-6);
+  }
+
+  .pa-resource-card {
+    min-height: 13rem;
+  }
+
+  .pa-resource-card .pa-product-card__body {
+    min-height: 13rem;
+    justify-content: center;
   }
 
   .pa-solution-secondary {
@@ -290,20 +404,53 @@ import {
     display: flex;
     flex-direction: column;
     gap: var(--pa-space-6);
-    max-width: 40rem;
-    padding: var(--pa-space-8);
+    max-width: 42rem;
+    padding: var(--pa-space-8) var(--pa-space-9);
     border-left: var(--pa-border-width-accent) solid var(--pa-color-accent);
+    border-top: var(--pa-border-width) solid var(--pa-color-border-subtle);
+    border-right: var(--pa-border-width) solid var(--pa-color-border-subtle);
+    border-bottom: var(--pa-border-width) solid var(--pa-color-border-subtle);
     background: var(--pa-color-bg-subtle);
   }
 
   @media (max-width: 768px) {
-    .pa-home-cta :global(.pa-btn),
-    .pa-home-section-cta :global(.pa-btn) {
+    .pa-home-hero .pa-display {
+      font-size: clamp(2.45rem, 12vw, 3.5rem);
+      line-height: 0.94;
+    }
+
+    .pa-home-hero .pa-display span,
+    .pa-home-hero .pa-display em {
+      display: inline;
+    }
+
+    .pa-home-hero .pa-display span::after {
+      content: ' ';
+    }
+
+    .pa-home-cta .pa-btn,
+    .pa-home-section-cta .pa-btn {
       width: 100%;
     }
 
     .pa-proof {
       grid-template-columns: 1fr;
+    }
+
+    .pa-hub-card,
+    .pa-network-card,
+    .pa-solution-card,
+    .pa-resource-card {
+      min-height: 0;
+    }
+
+    .pa-industry-homecard,
+    .pa-industry-homecard .pa-industry-card__media {
+      min-height: 12rem;
+    }
+
+    .pa-projects-state {
+      padding: var(--pa-space-7);
     }
   }
 </style>

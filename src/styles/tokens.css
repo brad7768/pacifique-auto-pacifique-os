@@ -119,8 +119,10 @@
   --pa-container-max: 75rem; /* 1200px content max */
   --pa-container-wide: 87.5rem; /* 1400px shell */
   --pa-container-pad: 5%; /* legacy horizontal rhythm */
-  --pa-header-height: 4.5rem; /* 72px */
-  --pa-teaser-height: 2.25rem; /* ~36px when teaser present */
+  --pa-header-height: 4.5rem; /* 72px bar */
+  --pa-strip-height: 2rem; /* 32px utility strip */
+  --pa-chrome-height: calc(var(--pa-strip-height) + var(--pa-header-height));
+  --pa-teaser-height: 2.25rem; /* reserved; Yassa teaser not on homepage */
   --pa-section-pad-y: var(--pa-space-12);
   --pa-section-pad-y-sm: var(--pa-space-10);
   --pa-grid-gap: var(--pa-space-6);

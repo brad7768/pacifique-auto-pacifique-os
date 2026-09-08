@@ -1,57 +1,309 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
-import Section from '../components/ui/Section.astro';
-import SectionHeader from '../components/ui/SectionHeader.astro';
-import Badge from '../components/ui/Badge.astro';
+import Hero from '../components/ui/Hero.astro';
 import Button from '../components/ui/Button.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import FeatureCard from '../components/ui/FeatureCard.astro';
+import VehicleCard from '../components/ui/VehicleCard.astro';
+import IndustryCard from '../components/ui/IndustryCard.astro';
+import BrandCard from '../components/ui/BrandCard.astro';
+import ArticleCard from '../components/ui/ArticleCard.astro';
+import CTASection from '../components/ui/CTASection.astro';
 import { site } from '../data/site';
+import {
+  homeHubs,
+  homeSolutions,
+  homeIndustries,
+  homeBrands,
+  homeProof,
+  homeNetwork,
+  homeResources,
+} from '../data/home';
 ---
 
-<!--
-  PHASE 1 — Foundations status page.
-  This is NOT the marketing homepage (Phase 2).
-  It only proves shell + tokens wire correctly.
--->
 <BaseLayout
-  title="Phase 1 — Fondations"
-  description={`Fondations techniques ${site.name}. Homepage prévue en Phase 2.`}
-  noindex={true}
+  title={site.name}
+  description="Pacifique Auto — véhicules, pièces, maintenance, flotte et financement. Des solutions qui font avancer l'Afrique Centrale."
+  flushChrome={true}
 >
-  <Section tone="inverse" tight>
+  <!-- S1 Hero — navy structurel, sans IMG-001 (réservé véhicules / SINOTRUK) -->
+  <Hero
+    eyebrow="Pacifique Auto · Solutions industrielles"
+    description="Véhicules, pièces, maintenance, flotte et financement pour accompagner les opérations qui font avancer les territoires."
+    minHeight={true}
+    class="pa-home-hero"
+  >
+    <h1 slot="heading" class="pa-display">
+      DES SOLUTIONS QUI FONT AVANCER<br />
+      <em>L’AFRIQUE CENTRALE.</em>
+    </h1>
+    <div slot="actions" class="pa-cluster pa-home-cta">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/solutions" variant="inverse-outline">Découvrir nos solutions</Button>
+    </div>
+  </Hero>
+
+  <!-- S2 — 7 univers -->
+  <Section>
     <Container>
-      <Badge variant="inverse">Phase 1 · Foundations</Badge>
-      <h1 class="pa-display" style="margin-top: var(--pa-space-6); max-width: 18ch;">
-        Design system <em>&</em> architecture
-      </h1>
-      <p class="pa-lead" style="margin-top: var(--pa-space-5);">{site.slogan}</p>
-      <p class="pa-body" style="margin-top: var(--pa-space-5); max-width: 36rem;">
-        Le shell global, les tokens et les composants de base sont en place.
-        La homepage marketing n’est pas démarrée — validation Phase 1 requise avant Phase 2.
-      </p>
-      <div class="pa-cluster" style="margin-top: var(--pa-space-8);">
-        <Button href="/design-system" variant="primary">Voir le design system</Button>
+      <SectionHeader
+        label="Navigation"
+        title="Explorer nos univers"
+        intro="Accès direct aux pôles du site public."
+      />
+      <div class="pa-grid pa-grid--auto">
+        {
+          homeHubs.map((hub) => (
+            <FeatureCard title={hub.title} description={hub.description} href={hub.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
       </div>
-      <p class="pa-caption" style="margin-top: var(--pa-space-4); color: var(--pa-color-text-muted);">
-        Specs : <code>docs/pacifique-auto/MASTER_SPEC.md</code> · Legacy préservé dans <code>/legacy</code>
-      </p>
     </Container>
   </Section>
 
+  <!-- S3 — Solutions -->
   <Section tone="subtle">
     <Container>
       <SectionHeader
-        label="Périmètre Phase 1"
-        title="Livrables fondations"
-        intro="Tokens, shell, composants génériques, cartographies routes/images, QA. Aucune page métier construite."
+        label="Capacités"
+        title="Solutions"
+        intro="Véhicules, pièces, maintenance, flotte et financement."
       />
-      <ul class="pa-stack" role="list" style="list-style: disc; padding-left: 1.25rem; color: var(--pa-color-text-muted);">
-        <li>Architecture Astro SSG documentée</li>
-        <li>Design tokens CSS uniques</li>
-        <li>Header + mega menu + mobile + footer</li>
-        <li>Bibliothèque de composants de base</li>
-        <li>ROUTE_MAP · IMAGE_MAP · PAGE_DEPENDENCY_MAP · QA_CHECKLIST</li>
-      </ul>
+      <div class="pa-grid pa-grid--3">
+        {
+          homeSolutions.map((item) =>
+            'useVehicleCard' in item && item.useVehicleCard ? (
+              <VehicleCard
+                title={item.title}
+                description={item.description}
+                href={item.href}
+                imageSrc={item.imageSrc}
+                imageAlt={item.imageAlt}
+                model="Véhicules"
+              />
+            ) : (
+              <FeatureCard title={item.title} description={item.description} href={item.href}>
+                <span slot="icon" class="pa-mark" aria-hidden="true" />
+                {'secondary' in item && item.secondary ? (
+                  <p class="pa-solution-secondary">
+                    <a href={item.secondary.href}>{item.secondary.label}</a>
+                  </p>
+                ) : null}
+              </FeatureCard>
+            )
+          )
+        }
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/solutions" variant="secondary">Toutes les solutions</Button>
+        <Button href="/devis" variant="primary">Demander un devis</Button>
+      </div>
     </Container>
   </Section>
+
+  <!-- S4 — Industries -->
+  <Section>
+    <Container>
+      <SectionHeader label="Secteurs" title="Industries" intro="Des réponses adaptées aux contraintes de chaque secteur." />
+      <div class="pa-grid pa-grid--5">
+        {
+          homeIndustries.map((item) => (
+            <IndustryCard title={item.title} description={item.description} href={item.href} />
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/industries" variant="outline">Voir les industries</Button>
+        <Button href="/devis" variant="primary">Demander un devis</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S5 — Marques -->
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Catalogue" title="Marques" intro="Constructeurs et références au catalogue." />
+      <div class="pa-grid pa-grid--4">
+        {homeBrands.map((brand) => <BrandCard name={brand.name} href={brand.href} />)}
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/marques" variant="outline">Toutes les marques</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S6 — Pourquoi Pacifique Auto -->
+  <Section tone="primary-mid">
+    <Container>
+      <SectionHeader
+        label="Confiance"
+        title="Pourquoi Pacifique Auto"
+        intro="Une infrastructure industrielle et commerciale B2B."
+        inverse
+      />
+      <div class="pa-grid pa-grid--2 pa-proof">
+        {
+          homeProof.map((pillar, i) => (
+            <article class="pa-proof__item">
+              <span class="pa-proof__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="pa-h4 pa-text-inverse">{pillar.title}</h3>
+                <p class="pa-body pa-proof__text">{pillar.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/a-propos" variant="primary">À propos</Button>
+        <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S7 — Projets (état structurel : aucun case study publiable dans le repo) -->
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Preuve terrain"
+        title="Projets"
+        intro="Les réalisations et études de cas validées sont rassemblées dans l’espace Projets."
+      />
+      <div class="pa-projects-state">
+        <p class="pa-body">
+          Les réalisations et études de cas validées seront présentées ici. En attendant, l’espace Projets
+          rassemble l’architecture de cette offre.
+        </p>
+        <Button href="/projets" variant="secondary">Tous les projets</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S8 — Réseau (pas de carte inventée) -->
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Couverture" title="Réseau" intro="Implantations, pièces, logistique." />
+      <div class="pa-grid pa-grid--3">
+        {
+          homeNetwork.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/reseau" variant="outline">Voir le réseau</Button>
+        <Button href="/contact" variant="secondary">Nous contacter</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S9 — Ressources -->
+  <Section>
+    <Container>
+      <SectionHeader label="Contenus" title="Ressources" intro="Actualités, documentation, guides." />
+      <div class="pa-grid pa-grid--3">
+        {
+          homeResources.map((item) => (
+            <ArticleCard title={item.title} excerpt={item.excerpt} href={item.href} category={item.title} />
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-home-section-cta">
+        <Button href="/ressources" variant="outline">Centre de ressources</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- S10 — CTA final -->
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
 </BaseLayout>
+
+<style>
+  .pa-home-hero :global(.pa-display) {
+    max-width: 16ch;
+  }
+
+  .pa-mark {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--pa-color-accent);
+  }
+
+  .pa-home-section-cta {
+    margin-top: var(--pa-space-8);
+  }
+
+  .pa-solution-secondary {
+    margin-top: var(--pa-space-5);
+    font-size: var(--pa-text-caption);
+  }
+
+  .pa-solution-secondary a {
+    color: var(--pa-color-accent);
+    text-decoration: none;
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-bold);
+    letter-spacing: var(--pa-tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .pa-solution-secondary a:hover {
+    text-decoration: underline;
+  }
+
+  .pa-proof__item {
+    display: flex;
+    gap: var(--pa-space-5);
+    padding: var(--pa-space-6) 0;
+    border-top: var(--pa-border-width) solid rgba(255, 255, 255, 0.08);
+  }
+
+  .pa-proof__index {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-black);
+    font-size: var(--pa-text-h3);
+    color: var(--pa-color-accent);
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+
+  .pa-proof__text {
+    margin-top: var(--pa-space-2);
+    color: var(--pa-color-text-on-dark-muted);
+  }
+
+  .pa-projects-state {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-6);
+    max-width: 40rem;
+    padding: var(--pa-space-8);
+    border-left: var(--pa-border-width-accent) solid var(--pa-color-accent);
+    background: var(--pa-color-bg-subtle);
+  }
+
+  @media (max-width: 768px) {
+    .pa-home-cta :global(.pa-btn),
+    .pa-home-section-cta :global(.pa-btn) {
+      width: 100%;
+    }
+
+    .pa-proof {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,647 +1,499 @@
 # PACIFIQUE AUTO — SOLUTIONS MASTER SPEC
 
-**Statut :** SOURCE DE VÉRITÉ — exécution future du hub `/solutions` et de ses pages enfants.  
-**Phase :** 3A — audit + spécification uniquement. **Pas** Phase 3B. **Aucun code.**  
-**Homepage validée :** Phase 2B `/` = référence de continuité visuelle.  
-**Priorité en cas de contradiction :** ce document pour le périmètre Solutions ; `PACIFIQUE_AUTO_HOMEPAGE_MASTER_SPEC.md` pour `/` ; `MASTER_SPEC.md` + `DESIGN_SYSTEM.md` + `tokens.css` pour l’identité.
+**Statut :** SOURCE DE VÉRITÉ — hub `/solutions` et pages enfants.  
+**Phase :** 3A — spécification uniquement. **Arbitrage final VERROUILLÉ.**  
+**Pas de Phase 3B. Aucun code. Aucune page. Aucun composant.**  
+**Homepage validée :** Phase 2B `/` = continuité visuelle.  
+**Priorité :** ce document pour Solutions ; `PACIFIQUE_AUTO_HOMEPAGE_MASTER_SPEC.md` pour `/` ; `MASTER_SPEC.md` + `DESIGN_SYSTEM.md` + `tokens.css` pour l’identité.
 
 Documents liés : `MASTER_SPEC.md` · `PACIFIQUE_AUTO_HOMEPAGE_MASTER_SPEC.md` · `ROUTE_MAP.md` · `IMAGE_MAP.md` · `PAGE_DEPENDENCY_MAP.md` · `DESIGN_SYSTEM.md` · `src/data/routes.ts` · `src/data/navigation.ts` · `src/data/home.ts` · `src/data/site.ts`
 
-Légende des statuts de donnée :
+Légende :
 
 | Marqueur | Signification |
 |----------|----------------|
-| **[CONFIRMÉ]** | Présent dans le repository, l’IA verrouillée, ou la homepage MASTER. |
-| **[PROVISOIRE]** | Copy / structure d’exécution, dérivée du contenu existant, à valider avant prod. |
-| **[OPEN]** | Ambiguïté non tranchée. Ne pas inventer pour « remplir ». |
+| **[CONFIRMÉ]** | Repository, IA, homepage MASTER, ou arbitrage 3A. |
+| **[PROVISOIRE]** | Copy / assemblage d’exécution, dérivé du confirmé. |
+| **[OPEN]** | Impossible à résoudre avec le repository. Ne pas inventer. |
+| **[VERROUILLÉ]** | Décision d’arbitrage 3A. |
 
 ---
 
-## 0. Audit repository (obligatoire — réalisé)
+## 0. Audit repository (constat — inchangé)
 
-Scan 2026-09-08 (hors `node_modules`, `.git`, `dist`).
+Scan 2026-09-08, rescan arbitrage (hors `node_modules`, `.git`, `dist`). Aucun asset visuel nouveau.
 
-### 0.1 Routes réellement présentes
+### 0.1 Routes **[CONFIRMÉ]**
 
-**Registre canonique** `src/data/routes.ts` + `docs/pacifique-auto/ROUTE_MAP.md` :
+| Route | Type | Rôle | Page Astro |
+|-------|------|------|------------|
+| `/solutions` | hub | Centre de décision commerciale | **Absente** |
+| `/solutions/vehicules` | leaf | Solution commerciale Véhicules | **Absente** |
+| `/solutions/pieces-services` | leaf | Solution commerciale Pièces & Services | **Absente** |
+| `/solutions/maintenance` | leaf | Solution commerciale Maintenance | **Absente** |
+| `/solutions/fleet-mobility` | leaf | Solution commerciale Fleet & Mobility | **Absente** |
+| `/solutions/financement` | leaf | Solution commerciale Financement | **Absente** |
+| `/financement` | tool | Calculateur / simulation — **pas** une 6ᵉ solution | **Absente** |
+| `/configurateur` | tool | Outil commercial associé aux véhicules | **Absente** |
+| `/rendez-vous` | tool | Prise de rendez-vous atelier (`ROUTE_MAP`) | **Absente** |
+| `/devis` | tool | Conversion principale | **Absente** |
+| `/contact` | leaf | Conversion secondaire | **Absente** |
+| `/recherche` | tool | Recherche site — **pas** un catalogue pièces | **Absente** |
 
-| Route | Type | Parent | Statut code | Page Astro |
-|-------|------|--------|-------------|------------|
-| `/solutions` | hub | `/` | `planned` | **Absente** |
-| `/solutions/vehicules` | leaf | `/solutions` | `planned` | **Absente** |
-| `/solutions/pieces-services` | leaf | `/solutions` | `planned` | **Absente** |
-| `/solutions/maintenance` | leaf | `/solutions` | `planned` | **Absente** |
-| `/solutions/fleet-mobility` | leaf | `/solutions` | `planned` | **Absente** |
-| `/solutions/financement` | leaf | `/solutions` | `planned` | **Absente** |
-| `/financement` | tool | `/` | `planned` | **Absente** — calculateur, **distinct** du leaf |
-| `/devis` | tool | `/` | `planned` | **Absente** |
-| `/contact` | leaf | `/a-propos` | `planned` | **Absente** |
-| `/configurateur` | tool | `/` | `planned` | **Absente** |
-| `/rendez-vous` | tool | `/` | `planned` | **Absente** |
-| `/recherche` | tool | `/` | `planned` | **Absente** |
+Redirect Netlify : `/services` → `/solutions` (302).  
+Cinq familles seulement. Pages Astro existantes : `/` · `/design-system`.
 
-Pages Astro existantes : `/` (homepage Phase 2B) · `/design-system` (laboratoire interne).
+### 0.2 Données confirmées
 
-**Aucune sixième famille Solutions n’existe dans `routes.ts`, `navigation.ts` ou l’architecture visuelle.**
+| Donnée | Source |
+|--------|--------|
+| 5 labels Solutions | `navigation.ts` · `routes.ts` · homepage S3 |
+| Copy courte des 5 familles | `home.ts` `homeSolutions` |
+| SINOTRUK HOHAN 8×4 | Legacy + IMG-001 + IMAGE_MAP |
+| WABCO, BOSCH | Labels IA / `ROUTE_MAP` / nav Marques — **pas** claim partenaire |
+| CTA globaux Devis / Contact | `commercialActions` · homepage |
+| `/financement` outil | `ROUTE_MAP` : Calculateur financement |
+| `/configurateur` outil | `ROUTE_MAP` : Configuration véhicule |
+| `/rendez-vous` outil | `ROUTE_MAP` : RDV atelier / Prise de rendez-vous atelier |
+| Coordonnées Douala | `site.ts` |
+| Boundary PacifiqueOS | `site.ts` `externalUrl: null` — site public ≠ OS |
 
-Redirect Netlify **[CONFIRMÉ]** : `/services` → `/solutions` (302).
+### 0.3 Assets réellement présents
 
-### 0.2 Navigation et liens internes
+| ID | Fichier | Usage Solutions |
+|----|---------|-----------------|
+| IMG-001 | `public/assets/images/hero-sinotruk-hohan.jpg` | SINOTRUK / véhicules **uniquement** |
+| IMG-002 | `public/assets/reference/architecture-visuelle.png` | Référence IA. Interdit en contenu. |
+| Favicon Astro | `public/favicon.svg` · `.ico` | Interdit identité PA |
 
-| Source | Ce qui est câblé |
-|--------|------------------|
-| Mega menu Solutions | 5 enfants, labels verrouillés |
-| Utility strip | Véhicules · Pièces & Services (pas Maintenance / Fleet / Financement) |
-| Homepage S2 | Hub Solutions → `/solutions` |
-| Homepage S3 | 5 cartes → 5 leafs ; Financement a un lien secondaire « Calculer mon financement » → `/financement` |
-| Footer | Lien « Solutions » → `/solutions` |
-| Hero homepage | CTA secondaire « Découvrir nos solutions » → `/solutions` |
+Aucun JPEG/PNG de pièces, atelier, flotte, financement, Alios, CFAO, logos constructeurs.
 
-Tous ces liens **404** aujourd’hui (pages `planned`). C’est attendu. Phase 3A ne les implémente pas.
+### 0.4 Legacy — non source d’offre
 
-### 0.3 Legacy (`/legacy`)
-
-`legacy/services.html` + `legacy/index2.html` décrivent **cinq domaines legacy**, pas les cinq familles cibles :
-
-| Legacy | Mapping Solutions | Verdict |
-|--------|-------------------|---------|
-| Négoce international | Aucun leaf Solutions | Hors hub. **[OPEN]** éventuel Réseau / logistique. |
-| Vente de camions | Véhicules | Recyclable avec prudence. |
-| Pièces d'origine | Pièces & Services | Recyclable avec prudence. |
-| Maintenance mécanique | Maintenance | Recyclable avec prudence. |
-| Agrégats RAZEL | **Aucune** famille Solutions | **Interdit** d’en faire une 6ᵉ solution. |
-
-Autres mentions legacy :
-
-- SINOTRUK HOHAN 8×4 Porteur Benne — modèle nommé. **[CONFIRMÉ]** comme texte + IMG-001 ; pas un catalogue.
-- Livraison « via CFAO MOBILITY » — **[OPEN]** (claim partenaire).
-- Tags camions Mercedes-Benz, Volvo, DAF — **[OPEN]** (hors IA homepage ; réservés `/marques/autres` tant que non validés).
-- Pièces : Wabco, Mahle, Ren-Par, BPW — WABCO **[CONFIRMÉ]** (IA) ; les autres **[OPEN]**.
-- Maintenance : diagnostic, réparation, entretien, urgence — **[PROVISOIRE]** (tags legacy, pas de preuve opérationnelle).
-- Financement Alios 36/48 mois — **interdit d’affichage** (MASTER homepage). Partenariat **[OPEN]**.
-- Formulaire devis : types de demande camion / Alios / pièces / maintenance / agrégats — utile pour champs `/devis` plus tard, pas pour inventer une offre.
-
-**Fleet & Mobility :** aucune page, aucun paragraphe, aucun asset legacy. Origine = architecture visuelle uniquement.
-
-### 0.4 Données code
-
-| Fichier | Contenu Solutions |
-|---------|-------------------|
-| `src/data/home.ts` `homeSolutions` | 5 titres, 5 descriptions courtes, 5 href, IMG-001 sur Véhicules seulement, secondary financement |
-| `src/data/navigation.ts` | 5 enfants + CTA devis/contact |
-| `src/data/site.ts` | Coordonnées, slogan, boundary PacifiqueOS (`externalUrl: null`) |
-| Catalogue pièces / SKU / stock | **Aucun** |
-| Liste de modèles véhicules | **Aucun** fichier data (seulement HOHAN dans copy + IMAGE_MAP) |
-| Calculateur | **Aucun** module |
-| Configurateur | **Aucun** module |
-
-### 0.5 Composants réutilisables (Phase 1 — ne pas en créer en 3A)
-
-`Header` · `MegaMenu` · `MobileNav` · `Footer` · `Breadcrumb` · `Hero` · `Section` · `SectionHeader` · `Container` · `Button` · `Card` · `FeatureCard` · `VehicleCard` · `BrandCard` · `IndustryCard` · `CTASection` · `FormField`
-
-`PageHero` / `HubCardGrid` cités dans `ROUTE_MAP` / Phase 0 = **noms d’intention**, pas de fichiers. En 3B : assembler `Hero` + grilles existantes, ne pas créer un design system parallèle.
-
-### 0.6 Assets réellement présents
-
-| ID | Fichier | Sujet | Usage Solutions autorisé |
-|----|---------|-------|--------------------------|
-| IMG-001 | `public/assets/images/hero-sinotruk-hohan.jpg` | Camion SINOTRUK HOHAN 8×4, portrait 1500×2000 | `/solutions/vehicules` (hero ou carte produit) **uniquement**. Pas filler hub. Pas Pièces / Maintenance / Fleet / Financement. |
-| IMG-002 | `public/assets/reference/architecture-visuelle.png` | Sitemap | Référence IA. **Interdit** en contenu. |
-| Favicon Astro | `public/favicon.svg` / `.ico` | Logo Astro | **Interdit** identité PA. |
-
-Aucun autre JPEG/PNG/WebP/SVG de pièces, atelier, techniciens, flotte, financement, infrastructures, logos constructeurs.
-
-### 0.7 Contradiction CTA `ROUTE_MAP` vs brief Phase 3A
-
-`ROUTE_MAP.md` (Phase 1) propose des CTA secondaires / principaux différents par leaf :
-
-| Page | ROUTE_MAP | Brief 3A (à appliquer ici) |
-|------|-----------|----------------------------|
-| Véhicules | Devis + **Configurateur** | Devis + Contact. Configurateur = **[OPEN]** |
-| Maintenance | **RDV atelier** + Devis | Devis + Contact. `/rendez-vous` = **[OPEN]** |
-| Financement (leaf) | **Calculateur** + Devis | Devis + Contact ; calculateur en CTA tertiaire pertinent → `/financement` |
-
-**Décision d’exécution 3A :** le brief Phase 3A + la homepage validée priment sur les CTA ROUTE_MAP pour ces pages. Ne pas modifier `ROUTE_MAP.md` dans cette phase documentation Solutions (écart documenté en §14).
+Ne pas importer comme contenu public : Alios, CFAO, Mercedes, Volvo, DAF, MAN, RAZEL, « pièces d’origine », diagnostic constructeur, 36/48 mois.
 
 ---
 
-## 1. Mission du hub Solutions
+## 1. Mission du hub — VERROUILLÉ
 
-`/solutions` est le **centre de décision commerciale** du site public.
-
-Il doit répondre, dans cet ordre :
-
-1. Que propose Pacifique Auto ?  
-2. À quels besoins répond chaque solution ?  
-3. Quelle solution correspond à mon besoin ?  
-4. Comment passer à l’action ?
-
-Ce n’est **pas** :
-
-- un catalogue générique de modèles / SKU  
-- une encyclopédie métier  
-- une interface SaaS / PacifiqueOS  
-- un sixième univers (RAZEL, négoce, Yassa)
-
-Ton : **corporate · B2B · industriel · premium · technique.**
-
-Continuité homepage : mêmes 5 familles, mêmes labels, mêmes destinations, mêmes CTA commerciaux.
-
----
-
-## 2. Architecture
+`/solutions` = **centre de décision commerciale**.
 
 ```
-/  (homepage validée)
-└── /solutions                         ← hub décision
-    ├── /solutions/vehicules           ← leaf 1
-    ├── /solutions/pieces-services     ← leaf 2
-    ├── /solutions/maintenance         ← leaf 3
-    ├── /solutions/fleet-mobility      ← leaf 4
-    └── /solutions/financement         ← leaf 5 (contenu)
-/financement                           ← outil conversion (hors hub, lié)
-/devis                                 ← conversion principale
-/contact                               ← conversion secondaire
+BESOIN → SOLUTION → OUTIL SI PERTINENT → DEVIS / CONTACT
 ```
 
-Cinq familles **[CONFIRMÉ]** — jamais une sixième.
+Cinq besoins principaux **[CONFIRMÉ]** :
 
-Relations conceptuelles (pas des pages enfants supplémentaires) :
-
-```
-Véhicules ──► Flotte / opérations ──► Maintenance
-     │                                      │
-     └──────── Pièces & Services ───────────┘
-                      │
-                 Financement (équipements)
-```
-
-Liens de contexte autorisés (pages encore `planned`) : `/marques` · `/industries` · `/reseau/global-parts` · `/reseau/logistique`.  
-Ne pas simuler ces pages dans le hub.
-
----
-
-## 3. Routes — rôle, CTA, dépendances
-
-### 3.1 Hub
-
-| Champ | Valeur |
-|-------|--------|
-| Route | `/solutions` **[CONFIRMÉ]** |
-| Rôle | Orienter, comparer implicitement, choisir, convertir |
-| CTA principal | Demander un devis → `/devis` |
-| CTA secondaire | Nous contacter → `/contact` |
-| Composants | `Hero` (page, pas 100vh) · `FeatureCard` / `VehicleCard` · `SectionHeader` · `CTASection` · `Breadcrumb` |
-| Image hub | **Aucune obligatoire.** Pas IMG-001 en filler. |
-| Statut | `planned` |
-
-### 3.2 Véhicules
-
-| Champ | Valeur |
-|-------|--------|
-| Route | `/solutions/vehicules` **[CONFIRMÉ]** |
-| Rôle | Faire comprendre l’offre véhicules B2B (besoin, usage, marque confirmée, devis) |
-| Sous-pages | **Aucune** dans `routes.ts` |
-| CTA principal | Demander un devis → `/devis` |
-| CTA secondaire | Nous contacter → `/contact` |
-| CTA non affiché | `/configurateur` tant que ownership + page **[OPEN]** |
-| Asset | IMG-001 **[CONFIRMÉ]** |
-| Données catalogue | Un modèle nommé en legacy (HOHAN 8×4). **Pas** de listing SKU. |
-
-### 3.3 Pièces & Services
-
-| Champ | Valeur |
-|-------|--------|
-| Route | `/solutions/pieces-services` **[CONFIRMÉ]** |
-| Rôle | Trouver → obtenir → maintenir la disponibilité des parcs |
-| Sous-pages | **Aucune** |
-| CTA principal | `/devis` |
-| CTA secondaire | `/contact` |
-| Lien contextuel | `/reseau/global-parts` (approvisionnement) **[CONFIRMÉ]** comme route, page absente |
-| Base de pièces | **Absente.** Ne pas inventer recherche SKU. `/recherche` = outil site, pas catalogue pièces. |
-| Asset | **Manquant** |
-
-### 3.4 Maintenance
-
-| Champ | Valeur |
-|-------|--------|
-| Route | `/solutions/maintenance` **[CONFIRMÉ]** |
-| Rôle | Entretien, support technique, disponibilité des équipements |
-| Sous-pages | **Aucune** |
-| CTA principal | `/devis` |
-| CTA secondaire | `/contact` |
-| Route RDV | `/rendez-vous` existe au registre, **page absente**, ownership **[OPEN]** — ne pas en faire le CTA principal |
-| Diagnostic | Tag legacy seulement **[PROVISOIRE]** — pas de promesse d’équipement de diagnostic |
-| Asset | **Manquant** |
-
-### 3.5 Fleet & Mobility
-
-| Champ | Valeur |
-|-------|--------|
-| Route | `/solutions/fleet-mobility` **[CONFIRMÉ]** (IA + nav) |
-| Rôle réel dans le repo | Famille d’accompagnement flotte / opérations, **sans produit logiciel décrit** |
-| Relier conceptuellement | Véhicules + flotte + opérations + maintenance |
-| Interdit | UI PacifiqueOS, télémétrie, dashboard, KPI inventés |
-| CTA | `/devis` + `/contact` |
-| Contenu legacy | **Aucun** |
-| Asset | **Manquant** |
-
-### 3.6 Financement (contenu) vs `/financement` (outil)
-
-| Route | Type | Rôle exact |
-|-------|------|------------|
-| `/solutions/financement` | leaf contenu | Expliquer que Pacifique Auto propose des **solutions de financement associées aux équipements**. Conversion vers devis. |
-| `/financement` | tool | **Calculateur / simulation** — outil de conversion. Page **non construite**. Lien autorisé (homepage S3 l’utilise déjà). |
-
-Ne pas fusionner les deux routes.  
-Ne pas mentionner Alios.  
-Ne pas afficher 36/48 mois (legacy Alios) tant que **[OPEN]**.
-
-CTA leaf : principal `/devis` · secondaire `/contact` · tertiaire pertinent « Calculer mon financement » → `/financement`.  
-Si l’outil n’est pas encore implémenté en 3B, le lien reste structurel (comme la homepage) — ne pas inventer le calculateur dans la page contenu.
-
----
-
-## 4. Parcours utilisateur
-
-### 4.1 Entrées **[CONFIRMÉ]**
-
-Homepage S3 · mega menu · utility strip (Véhicules, Pièces) · hero « Découvrir nos solutions » · footer.
-
-### 4.2 Flux cible
-
-```
-Explorer (/solutions)
-    → Comparer implicitement (5 cartes + 1 besoin / 1 famille)
-        → Choisir (leaf)
-            → Demander un devis (/devis)
-            ou Nous contacter (/contact)
-            ou, si financement, Calculer (/financement)
-```
-
-### 4.3 Priorité commerciale (pas un tunnel UX inventé)
-
-1. Véhicules  
+1. Véhicule  
 2. Pièces & Services  
 3. Maintenance  
 4. Fleet & Mobility  
 5. Financement  
 
-Aligné homepage S3. Ne pas réordonner.
-
-### 4.4 Sorties hors Solutions
-
-Industries, Marques, Réseau : liens discrets, pas une deuxième homepage.
+Site public = proposition commerciale B2B industrielle.  
+PacifiqueOS = infrastructure opérationnelle — **jamais exposée** ici.
 
 ---
 
-## 5. Structure `/solutions`
+## 2. Architecture finale — VERROUILLÉE
 
-Page **courte**. Centre de décision, pas encyclopédie.
+```
+/  homepage
+└── /solutions                              hub décision
+    ├── /solutions/vehicules                solution
+    ├── /solutions/pieces-services          solution
+    ├── /solutions/maintenance              solution
+    ├── /solutions/fleet-mobility           solution
+    └── /solutions/financement              solution commerciale
+/financement                                outil calcul / simulation
+/configurateur                              outil associé véhicules
+/rendez-vous                                outil RDV atelier
+/devis                                      conversion N1
+/contact                                    conversion N2
+```
 
-| # | Section | Objectif | Fond | Composant | Contenu | Image | CTA |
-|---|---------|----------|------|-----------|---------|-------|-----|
-| S0 | Header + utility strip | Continuité shell | existant | Header | — | — | Devis header |
-| S1 | Hero hub | Annoncer les 5 capacités | Navy | `Hero` `minHeight=false` | Eyebrow / H1 / § / 2 CTA | **Pas** IMG-001 | Devis + Contact |
-| S2 | Cinq solutions | Explorer + choisir | Blanc | Grille 5 : `VehicleCard` Véhicules + `FeatureCard` ×4 | Copy `homeSolutions` | IMG-001 **uniquement** carte Véhicules | Lien carte = leaf |
-| S3 | Quel besoin ? | Comparaison implicite | Subtle `#F4F6FB` | 5 lignes besoin → famille (texte, pas tableau SaaS) | **[PROVISOIRE]** voir §9 | Aucune | Liens leaf |
-| S4 | Contexte | Relier sans diluer | Blanc | 2–3 liens texte/cartes légères | Industries · Marques · Réseau pièces | Aucune | `/industries` `/marques` `/reseau/global-parts` |
-| S5 | CTA final | Conversion | Navy | `CTASection` | Aligné homepage S10 | — | Devis + Contact |
-| S6 | Footer | Coordonnées | existant | Footer | — | — | WhatsApp footer only |
+`/financement`, `/configurateur`, `/rendez-vous` ne sont **pas** des solutions.
+
+### 2.1 Fleet & Mobility — VERROUILLÉ
+
+**Conserver** comme solution commerciale.
+
+Périmètre commercial autorisé :
+
+- acquisition / renouvellement de flotte  
+- mobilité professionnelle  
+- accompagnement flotte  
+- maintenance associée  
+- financement associé  
+
+**Interdit d’exposer** (PacifiqueOS) :
+
+télémétrie · tracking temps réel · dispatch · TCO détaillé · alertes opérationnelles · dashboard fleet · work orders · analytics opérationnels.
+
+Détail opérationnel réel de l’offre (au-delà de ce cadrage) : **[OPEN]**.
+
+### 2.2 Financement vs outil — VERROUILLÉ
+
+| Route | Nature |
+|-------|--------|
+| `/solutions/financement` | Page commerciale de la solution Financement |
+| `/financement` | Outil de calcul / simulation |
+
+CTA outil, route **[CONFIRMÉ]** dans `ROUTE_MAP` : **Simuler mon financement** → `/financement`.  
+Pas de 6ᵉ solution. Alios non affiché. Taux / 36-48 mois interdits.
+
+### 2.3 Configurateur — VERROUILLÉ
+
+| Route | Nature |
+|-------|--------|
+| `/solutions/vehicules` | Solution commerciale Véhicules |
+| `/configurateur` | Outil commercial associé, **si** le périmètre fonctionnel est confirmé |
+
+Route et rôle d’intention **[CONFIRMÉ]** dans `ROUTE_MAP` (`Configuration véhicule`).  
+Fonctionnement réel (étapes, options, output) : **[OPEN]** — ne pas inventer.  
+CTA possible : **Configurer un véhicule** → `/configurateur`.  
+Phase 3A / 3B Solutions : **ne pas construire** le configurateur.
+
+### 2.4 Rendez-vous — VERROUILLÉ
+
+`/rendez-vous` : destination et rôle **[CONFIRMÉ]** par `ROUTE_MAP` (RDV atelier).  
+CTA secondaire Maintenance possible : **Prendre rendez-vous** → `/rendez-vous`.  
+Fonctionnement réel du booking : **[OPEN]**.  
+**Ne pas** construire de système de réservation en Phase 3A (ni dans le périmètre pages Solutions).
+
+---
+
+## 3. Routes, CTA, dépendances
+
+CTA **global** : principal **Demander un devis** → `/devis` · secondaire **Nous contacter** → `/contact`.
+
+| Page | CTA principal | CTA secondaire | Outil si pertinent |
+|------|---------------|----------------|--------------------|
+| `/solutions` | Devis | Contact | Liens S4 vers les 3 outils |
+| `/solutions/vehicules` | Devis | Contact | Configurer un véhicule → `/configurateur` |
+| `/solutions/pieces-services` | Devis | Contact | — (pas de catalogue, pas `/recherche` comme moteur pièces) |
+| `/solutions/maintenance` | Devis | Contact **et/ou** Prendre rendez-vous | `/rendez-vous` |
+| `/solutions/fleet-mobility` | Devis | Contact | Liens Véhicules / Maintenance / Financement (pas d’OS) |
+| `/solutions/financement` | Devis | Contact | Simuler mon financement → `/financement` |
+
+Outils : pages `planned`, liens structurels autorisés. Pas de faux UI d’outil dans les pages Solutions.
+
+---
+
+## 4. Parcours utilisateur — VERROUILLÉ
+
+### Hiérarchie UX
+
+| Niveau | Action |
+|--------|--------|
+| 1 | Identifier son besoin |
+| 2 | Découvrir la solution |
+| 3 | Utiliser un outil lorsque pertinent (Configurateur · Calculateur · Rendez-vous) |
+| 4 | Demander un devis |
+
+Entrées **[CONFIRMÉ]** : homepage S3, mega menu, utility strip (Véhicules, Pièces), hero « Découvrir nos solutions », footer.
+
+Ordre des 5 familles : identique homepage S3. Ne pas réordonner.
+
+---
+
+## 5. Structure `/solutions` — VERROUILLÉE
+
+Page **concise**. Pas d’encyclopédie.
+
+| # | Section | Objectif | Fond | Image | CTA |
+|---|---------|----------|------|-------|-----|
+| S0 | Header | Shell | existant | — | Devis header |
+| S1 | Hero | Annoncer le centre de décision | Navy structurel + typo forte + composition graphique industrielle **sobre** | **Pas IMG-001.** Pas d’image générée. Asset réel seulement s’il existe (aucun aujourd’hui). | Devis + Contact |
+| S2 | Choisir selon son besoin | 5 besoins → 5 solutions | Blanc | IMG-001 **uniquement** sur la carte Véhicules | Lien = leaf |
+| S3 | Approfondissement des 5 solutions | Une couche de clarté (rôle + besoin), pas un second site | `#F4F6FB` | Aucune hors Véhicules si reprise miniature IMG-001 | Lien leaf |
+| S4 | Outils commerciaux associés | Niveau UX 3 | Blanc | Aucune | Configurateur · Simuler · Rendez-vous |
+| S5 | Pourquoi Pacifique Auto | Continuité S6 homepage, version courte | Navy mid | Aucune | Devis ou À propos **[PROVISOIRE]** + Contact |
+| S6 | CTA final | Conversion | Navy | — | Devis + Contact |
+| S7 | Footer | Coordonnées | existant | — | WhatsApp footer only |
 
 Breadcrumb : Accueil / Solutions.
 
-**Interdit hub :** formulaire, KPI, Alios, RAZEL, Yassa, carte, articles, widgets flottants, 6ᵉ carte.
+**Interdit hub :** formulaire, KPI, Alios, CFAO, RAZEL, Yassa, carte, dashboard, 6ᵉ carte, PacifiqueOS.
+
+S2 / S3 ne dupliquent pas une page encyclopédique : S2 = choix rapide ; S3 = 5 blocs courts (titre + phrase `homeSolutions` + lien). Si trop long, fusionner S2+S3 en implémentation **sans** ajouter de contenu.
 
 ---
 
 ## 6. Structure de chaque solution
 
-Patron commun (continuité visuelle, profondeur produit **légèrement** supérieure au hub, jamais dashboard) :
+Patron leaf :
 
 1. Breadcrumb  
-2. Hero page (navy, aligné gauche, pas forcément 100vh)  
+2. Hero page (navy, gauche, pas forcément 100vh)  
 3. Besoin / rôle (1 bloc)  
-4. Preuve visuelle **si asset** sinon composition typographique  
-5. Liens connexes (autres solutions + 1 hub pertinent)  
-6. CTA final identique au système  
+4. Visuel **si** asset pertinent, sinon typographie  
+5. Outil si pertinent  
+6. Liens connexes (autres solutions, pas OS)  
+7. CTA final Devis + Contact  
 
 ### 6.1 `/solutions/vehicules`
 
-**Comprendre :** types · usages · marques si confirmées · contexte industriel · devis.
-
 | Bloc | Règle |
 |------|--------|
-| Hero | H1 Véhicules. Copy homepage : « Solutions véhicules pour les opérations industrielles et logistiques. » **[CONFIRMÉ]** |
-| Visuel | IMG-001 autorisé (hero **de cette page** ou carte produit). Crop IMAGE_MAP. Ce n’est pas le hero homepage. |
-| Types | **[PROVISOIRE]** un seul type documenté : poids lourd / porteur benne (HOHAN). Ne pas inventer tracteurs, citernes, bus, etc. |
-| Modèle | **[CONFIRMÉ]** nommage possible : SINOTRUK HOHAN 8×4 (legacy + IMAGE_MAP). Présenter comme **exemple de contexte**, pas comme catalogue. |
-| Marques | SINOTRUK **[CONFIRMÉ]** (IA + asset). Lien `/marques/sinotruk`. Autres constructeurs : lien « Autres marques » `/marques/autres` **sans** les lister comme disponibles. |
-| Usages | **[PROVISOIRE]** opérations industrielles et logistiques ; lien Industries Transport / BTP **sans** pitch sectoriel inventé. |
-| CFAO / Mercedes / Volvo / DAF | **[OPEN]** — ne pas afficher. |
-| Configurateur | **[OPEN]** — pas de CTA. |
-| CTA | Devis + Contact |
+| Copy | **[CONFIRMÉ]** « Solutions véhicules pour les opérations industrielles et logistiques. » |
+| Visuel | IMG-001 autorisé (hero **de cette page** ou carte). Pas hero du hub. |
+| Constructeur / modèle | SINOTRUK / HOHAN **[CONFIRMÉ]** pour le contenu déjà présent. Présenter comme contexte, **pas** un catalogue. |
+| Autres constructeurs | Mercedes, Volvo, MAN, DAF, Renault Trucks, etc. : **ne pas ajouter** (legacy ≠ preuve). `/marques/autres` peut exister sans lister une offre. |
+| Configurateur | CTA « Configurer un véhicule » autorisé (route `ROUTE_MAP`). Ne pas décrire de fonctionnalités inventées. |
+| CFAO | **Non affiché.** |
 
 ### 6.2 `/solutions/pieces-services`
 
-**Couvrir :** trouver → obtenir → maintenir la disponibilité.
-
 | Bloc | Règle |
 |------|--------|
-| Hero | Copy homepage **[CONFIRMÉ]** : « Pièces et services pour la disponibilité des parcs. » |
-| Visuel | **Manquant** → composition typographique / `FeatureCard`. Pas IMG-001. |
-| Catalogue | **Interdit** (aucune base). |
-| Recherche pièces | `/recherche` n’est pas un moteur pièces. Ne pas le vendre comme tel. |
-| Marques pièces | WABCO · BOSCH **[CONFIRMÉ]** comme labels IA, **sans** « partenaire officiel ». Mahle / Ren-Par / BPW **[OPEN]**. |
-| Approvisionnement | Lien `/reseau/global-parts` comme orientation, pas comme réseau cartographié. |
-| Services | **[PROVISOIRE]** accompagner la disponibilité ; ne pas inventer SLA, stock 24/7, magasin en ligne. |
-| CTA | Devis + Contact |
+| Copy | **[CONFIRMÉ]** « Pièces et services pour la disponibilité des parcs. » |
+| Formulations autorisées | pièces · approvisionnement · disponibilité · accompagnement |
+| Formulations interdites | pièces d’origine · pièces authentiques · partenaire / distributeur / constructeur officiel ou certifié |
+| Labels | WABCO / BOSCH **autorisés** comme labels de navigation / architecture. Aucun claim. |
+| Autres marques pièces (Mahle, BPW, Ren-Par) | **[OPEN]** — ne pas lister comme distribuées. |
+| Catalogue / SKU / moteur pièces | **Interdit.** `/recherche` ≠ catalogue. |
+| Visuel | **Manquant** → typographie. Pas IMG-001. |
 
 ### 6.3 `/solutions/maintenance`
 
 | Bloc | Règle |
 |------|--------|
-| Hero | Copy homepage **[CONFIRMÉ]** : « Maintenance et support technique. » |
-| Visuel | **Manquant** |
-| Contenu autorisé **[PROVISOIRE]** dérivé legacy | Entretien, support technique, disponibilité. Formulations qualitatives. |
-| Diagnostic | Mentionnable seulement comme **[PROVISOIRE]** générique (« diagnostic ») **ou omis**. Pas d’équipement, pas de délai, pas d’urgence 24/7 non documentés. |
-| RDV | Ne pas promettre de booking. `/rendez-vous` **[OPEN]**. Conversion = devis / contact. |
-| Lien | Fleet & Véhicules (écosystème, pas OS). |
-| CTA | Devis + Contact |
+| Copy | **[CONFIRMÉ]** « Maintenance et support technique. » |
+| Formulations autorisées | maintenance · entretien · support technique · disponibilité · accompagnement |
+| Formulations interdites | diagnostic constructeur · techniciens certifiés · expertise officielle · certification constructeur |
+| Capacités exactes | **[OPEN]** — ne pas inventer SLA, urgence 24/7, outillage. |
+| RDV | CTA secondaire « Prendre rendez-vous » → `/rendez-vous` (`ROUTE_MAP` **[CONFIRMÉ]**). Pas de widget de réservation. |
+| Visuel | **Manquant.** |
 
 ### 6.4 `/solutions/fleet-mobility`
 
-Rôle : relier **véhicules + flotte + opérations + maintenance** pour un décideur de parc.  
-Ce n’est **pas** PacifiqueOS.
-
 | Bloc | Règle |
 |------|--------|
-| Hero | Copy homepage **[CONFIRMÉ]** : « Accompagnement flotte et mobilité. » |
-| Visuel | **Manquant** |
-| Corps | **[PROVISOIRE]** 3 piliers textuels max : équiper (Véhicules) · maintenir (Maintenance / Pièces) · accompagner l’exploitation. Sans modules logiciels. |
-| Interdit | Login, tracking, cartes de flotte, widgets, « plateforme ». |
-| CTA | Devis + Contact |
-
-Si le métier réel de « Fleet & Mobility » doit être précisé (location, gestion de parc, conseil) : **[OPEN]** — rester sur l’accompagnement jusqu’à validation.
+| Copy intro | **[CONFIRMÉ]** « Accompagnement flotte et mobilité. » |
+| Corps commercial **[VERROUILLÉ]** | Acquisition / renouvellement · mobilité professionnelle · accompagnement flotte · maintenance associée · financement associé. Liens vers Véhicules, Maintenance, Financement. |
+| Interdit | Toute UI ou vocabulaire PacifiqueOS listé §2.1. |
+| Périmètre opérationnel détaillé | **[OPEN]** |
+| Visuel | **Manquant.** |
 
 ### 6.5 `/solutions/financement`
 
 | Bloc | Règle |
 |------|--------|
-| Hero | Copy homepage **[CONFIRMÉ]** : « Solutions de financement associées aux équipements. » |
-| Visuel | **Manquant** — carte texte OK (IMAGE_MAP : priorité basse). |
-| Partenaire | **Alios non affiché.** Tout autre organisme **[OPEN]**. |
-| Durées / taux | **Interdits** (legacy 36/48 mois lié Alios). |
-| Outil | Lien tertiaire « Calculer mon financement » → `/financement` **[CONFIRMÉ]** comme route outil. Ne pas embarquer un faux calculateur. |
-| CTA | Devis + Contact + lien outil |
+| Copy | **[CONFIRMÉ]** « Solutions de financement associées aux équipements. » |
+| Partenaires | Alios / CFAO **non affichés.** Aucun autre organisme inventé. |
+| Outil | « Simuler mon financement » → `/financement`. Ne pas embarquer le calculateur. |
+| Fonctionnement du calculateur | **[OPEN]** |
+| Visuel | **Manquant** — texte OK. |
 
-### 6.6 `/financement` (hors hub, spécifié ici pour clarté)
+### 6.6 Outils (hors pages Solutions — liens seulement)
 
-Page **outil**, pas une 6ᵉ solution.  
-Ownership public vs PacifiqueOS : **[OPEN]** (`MASTER_SPEC` §5).  
-Phase 3B Solutions **n’implémente pas** le calculateur. Elle peut seulement **lier** la route, comme la homepage.
+Ne pas implémenter en 3A. Ne pas simuler l’UI.
 
----
-
-## 7. CTA — système unique
-
-Cohérent homepage.
-
-| Priorité | Label | Route | Où |
-|----------|-------|-------|-----|
-| Principal | Demander un devis | `/devis` | Header, heroes, CTA finaux |
-| Secondaire | Nous contacter | `/contact` | Heroes pages, CTA finaux |
-| Pertinent financement | Calculer mon financement | `/financement` | Hub carte Financement · page Financement uniquement |
-| Navigation | Labels des 5 familles | leafs | Grille hub, mega menu |
-
-WhatsApp : footer seulement (`site.ts`). Pas de bouton flottant.
-
-Liens d’exploration (pas CTA commerciaux) : « Toutes les solutions » n’apparaît que hors hub (homepage). Sur le hub, les cartes **sont** l’exploration.
+| Outil | Lien | Fonctionnement réel |
+|-------|------|---------------------|
+| `/configurateur` | Depuis Véhicules + S4 hub | **[OPEN]** |
+| `/financement` | Depuis Financement + S4 hub | **[OPEN]** |
+| `/rendez-vous` | Depuis Maintenance + S4 hub | **[OPEN]** |
 
 ---
 
-## 8. Assets — IMAGE MAP Solutions
+## 7. CTA — système unique — VERROUILLÉ
 
-Méthode : SCAN → CLASSIFICATION → CONTEXTE → SOLUTION → PAGE → PRIORITÉ.
+| Priorité | Label | Route |
+|----------|-------|-------|
+| Global N1 | Demander un devis | `/devis` |
+| Global N2 | Nous contacter | `/contact` |
+| Outil véhicules | Configurer un véhicule | `/configurateur` |
+| Outil financement | Simuler mon financement | `/financement` |
+| Outil maintenance | Prendre rendez-vous | `/rendez-vous` |
 
-### 8.1 Disponible
+WhatsApp : footer seulement. Pas de bouton flottant.
 
-| ID | Fichier | Classification | Contexte | Solution | Page | Priorité | Crop |
-|----|---------|----------------|----------|----------|------|----------|------|
-| IMG-001 | `hero-sinotruk-hohan.jpg` | véhicules · camions · SINOTRUK | Poids lourd benne | Véhicules | `/solutions/vehicules` ; carte Véhicules du hub | Haute **dans ce contexte** | Card/hero 16:10 depuis portrait ; D cabine+benne ; M cabine |
+Note : la homepage Phase 2B utilise « Calculer mon financement ». Le label Solutions verrouillé est **Simuler mon financement**. Écart homepage **hors 3A**.
+
+---
+
+## 8. Assets
+
+Méthode : SCAN → CLASSIFICATION → CONTEXTE → SOLUTION → PAGE → PRIORITÉ.  
+Rescan arbitrage : identique à IMAGE_MAP.
+
+### 8.1 Présents
+
+| ID | Classification | Contexte | Solution | Page | Priorité |
+|----|----------------|----------|----------|------|----------|
+| IMG-001 | véhicules · camions · SINOTRUK | HOHAN 8×4 | Véhicules | `/solutions/vehicules` ; carte Véhicules S2 (et S3 si miniature) | Haute **dans ce contexte** |
 
 **Interdit :** hero `/solutions` · Pièces · Maintenance · Fleet · Financement · filler.
 
-### 8.2 Manquants après scan (réels)
+### 8.2 Hero `/solutions` — VERROUILLÉ
 
-| ID visé | Classification | Contexte | Solution / page | Priorité | Fallback 3B |
-|---------|----------------|----------|-----------------|----------|-------------|
-| IMG-SOL-HUB | infrastructure / industriel landscape | Décision commerciale | `/solutions` hero | Moyenne | Hero navy typographique (comme homepage) |
-| IMG-SOL-PIECES | pièces · composants | Magasin / pièce | Pièces | Haute | Carte texte |
-| IMG-SOL-MAINT | atelier · techniciens | Maintenance | Maintenance | Haute | Carte texte |
-| IMG-SOL-FLEET | flotte · transport | Parc / convoi | Fleet | Haute | Carte texte |
-| IMG-SOL-FINANCE | — | — | Financement | Basse | Carte texte |
-| IMG-LOGO-SINOTRUK / WABCO / BOSCH | logos | Marques liées | Véhicules / Pièces | Haute prod | `BrandCard` fallback si lien marques ; **pas** logos fabriqués |
-| IMG-LOGO-PA | wordmark | Shell | Toutes | Critique prod | `Logo.astro` existant |
+Traitement **sans photographie** :
 
-Aucune génération d’image. Aucun logo inventé.
+Navy `#09183A` + typographie Barlow Condensed forte + composition graphique industrielle **sobre** (filet accent, géométrie existante type `Hero` Phase 1).
 
-### 8.3 Politique
+Ne pas générer d’image.  
+Un futur asset landscape n’est utilisable que s’il est scanné, classé, et ajouté à IMAGE_MAP **avant** merge.
 
-1. Sujet = message de la page.  
-2. Sans asset pertinent → typographie / carte, pas d’image hors sujet.  
-3. Nouvelle image → ligne IMAGE_MAP **et** cette section **avant** merge 3B.
+### 8.3 Manquants après scan (réels)
+
+| ID visé | Classification | Page | Priorité | Fallback verrouillé |
+|---------|----------------|------|----------|---------------------|
+| (optionnel) landscape industriel | infrastructures / flotte | Hero hub | Non bloquant | Navy + typo §8.2 |
+| — | pièces · composants | Pièces | Haute si pack futur | Typographie |
+| — | atelier · maintenance | Maintenance | Haute si pack futur | Typographie |
+| — | flotte · transport | Fleet | Haute si pack futur | Typographie |
+| — | — | Financement | Basse | Typographie |
+| Logos SINOTRUK / WABCO / BOSCH / PA | marques / wordmark | Liens / shell | Prod | Pas de fabrication ; labels texte |
+
+Pas d’asset Alios / CFAO à chercher pour publication.
 
 ---
 
-## 9. Copy provisoire
+## 9. Copy
 
-Ne pas réintroduire les longs textes legacy (Cameroun/RAZEL/Alios/CFAO).
-
-### 9.1 Hub `/solutions` **[PROVISOIRE]** sauf mentions notées
+### 9.1 Hub **[PROVISOIRE]** sauf noté
 
 | Élément | Copy |
 |---------|------|
-| Eyebrow | Solutions **[PROVISOIRE]** ou Capacités **[CONFIRMÉ]** (homepage S3 label) |
-| H1 | Solutions **[CONFIRMÉ]** (label IA) — composition display uppercase Barlow Condensed |
-| Paragraphe | Véhicules, pièces, maintenance, flotte et financement. **[CONFIRMÉ]** (homepage intro S3) |
+| H1 | Solutions **[CONFIRMÉ]** — display uppercase |
+| Intro | Véhicules, pièces, maintenance, flotte et financement. **[CONFIRMÉ]** |
 | CTA | Demander un devis · Nous contacter **[CONFIRMÉ]** |
 
-**S3 besoin → famille [PROVISOIRE]** (une ligne chacune, pas d’argument inventé) :
+S2 besoin → solution :
 
-| Besoin | Famille |
-|--------|---------|
-| Équiper une opération | Véhicules |
-| Assurer la disponibilité des pièces | Pièces & Services |
-| Entretenir et supporter le parc | Maintenance |
-| Accompagner l’exploitation d’une flotte | Fleet & Mobility |
-| Financer les équipements | Financement |
+| Besoin | Solution |
+|--------|----------|
+| Véhicule | Véhicules |
+| Pièces & Services | Pièces & Services |
+| Maintenance | Maintenance |
+| Fleet & Mobility | Fleet & Mobility |
+| Financement | Financement |
 
-### 9.2 Leafs — titres et intros **[CONFIRMÉ]** (`home.ts` / homepage MASTER)
+S3 intros = `homeSolutions` **[CONFIRMÉ]**.  
+S4 labels outils = §7.  
+S5 : piliers homepage **[CONFIRMÉ]** (capacité multi-métiers, Douala, Afrique Centrale, labels marques, accompagnement B2B) — **sans** KPI.  
+S6 : « Parlons de votre prochain projet » **[CONFIRMÉ]** homepage — réemploi autorisé.
 
-| Page | Titre | Intro |
-|------|-------|-------|
-| Véhicules | Véhicules | Solutions véhicules pour les opérations industrielles et logistiques. |
-| Pièces & Services | Pièces & Services | Pièces et services pour la disponibilité des parcs. |
-| Maintenance | Maintenance | Maintenance et support technique. |
-| Fleet & Mobility | Fleet & Mobility | Accompagnement flotte et mobilité. |
-| Financement | Financement | Solutions de financement associées aux équipements. |
+### 9.2 Interdit en copy — VERROUILLÉ
 
-Tout paragraphe **plus long** = **[PROVISOIRE]** et limité à une reformulation de ces lignes + faits **[CONFIRMÉ]** (SINOTRUK label, IMG-001, coordonnées, 5 familles).  
-CTA final pages : **[PROVISOIRE]** titre possible « Parlons de votre prochain projet » — déjà **[CONFIRMÉ]** homepage S10 ; réemploi autorisé pour continuité.
+Alios · CFAO · 36/48 mois · RAZEL · FCC/BCC/LBR · Mercedes / Volvo / MAN / DAF comme offre  
+« partenaire officiel » · « distributeur officiel » · « partenaire certifié » · « constructeur partenaire »  
+pièces d’origine · pièces authentiques · diagnostic constructeur · techniciens certifiés · expertise officielle · certification constructeur  
+télémétrie · tracking · dispatch · TCO · dashboard · PacifiqueOS · Yassa · SLA inventé.
 
-### 9.3 Interdit en copy
+### 9.3 Formulations autorisées — VERROUILLÉ
 
-Alios · 36/48 mois · RAZEL / granulométries · FCC/BCC/LBR · « partenaire officiel » · « 30+ ans » · SLA · stock chiffré · PacifiqueOS · Yassa.
+maintenance · entretien · support technique · approvisionnement · disponibilité · pièces · accompagnement  
+(+ fleet : acquisition / renouvellement · mobilité professionnelle · financement associé — cadrage §2.1).
 
 ---
 
-## 10. Design
+## 10. Design — VERROUILLÉ
 
-Continuité homepage Phase 2B + `DESIGN_SYSTEM.md` + `tokens.css`.
+Continuité homepage :
 
-| Élément | Règle |
-|---------|--------|
-| Palette | Navy `#09183A` dominant, fond `#FFFFFF` / `#F4F6FB`, rouge accent CTA seulement |
-| Typo | Barlow Condensed display/H1–H3 ; Barlow body |
-| Spacing | `--pa-section-pad-y`, `--pa-grid-gap`, container 1200 / pad 5% |
-| CTA | Mêmes variants `Button` (primary, outline, inverse-outline, secondary) |
-| Hero | Gauche, navy, uppercase, pas de cards flottantes, pas de KPI |
-| Cartes | Même langage que S2–S3 homepage : présence, bordure subtile, pas SaaS |
-| Profondeur produit | Autorisée via **un** visuel pertinent (IMG-001 véhicules) et copy un cran plus claire — pas plus de gradients, pas plus d’animations |
-| Breadcrumb | Composant existant |
-| Rouge | Accent stratégique uniquement |
+- navy `#09183A`  
+- red `#D91A2A` (accent CTA / filets uniquement)  
+- blanc `#FFFFFF`  
+- `#F4F6FB`  
+- Barlow / Barlow Condensed  
+- industriel · B2B · premium · technique  
 
-**Interdit :** dashboard, glassmorphism, purple, fake logos, filler IMG-001, 6ᵉ famille visuelle.
+**Pas de look SaaS.** Pas de dashboard, glassmorphism, purple, widgets flottants, animations décoratives.
 
-Composants 3B : assembler l’existant. Créer un composant **seulement** s’il manque un assemblage documenté (ex. ligne besoin→solution) — pas une nouvelle identité.
+Hero hub : gauche, navy, uppercase, pas de cards flottantes, pas de KPI, pas IMG-001.
+
+Composants 3B : assembler l’existant (`Hero`, `FeatureCard`, `VehicleCard`, `CTASection`, `Breadcrumb`, …). Pas de nouvelle identité.
 
 ---
 
 ## 11. Responsive
 
-Mêmes breakpoints que MASTER : desktop ≥1101 · tablet 769–1100 · mobile ≤768.  
-QA largeurs homepage : 1440 · 1024 · 768 · 390 · 375.
+Breakpoints MASTER. QA : 1440 · 1024 · 768 · 390 · 375.
 
-| Viewport | Hub | Leafs | CTA |
-|----------|-----|-------|-----|
-| Desktop | Grille 5 solutions lisible en un écran de décision (wrap 3+2 acceptable, comme homepage S3) | Hero gauche ; IMG-001 dans ratio 16:10 | Deux boutons en cluster |
-| Tablet | Grille 2 cols | Hero non 100vh ; breadcrumb wrap | Cluster, puis stack si besoin |
-| Mobile | 1 col ; H1 non fragmenté mot-à-mot ; cartes non coupées | IMG-001 crop cabine ; pas de débordement | Boutons full width (règle homepage) |
+Desktop : S2 lisible comme grille de décision (wrap 3+2 OK).  
+Tablet : 2 cols.  
+Mobile : 1 col, H1 non fragmenté mot-à-mot, CTA full width, pas de débordement, cartes non coupées.
 
-Priorité : **parcours commercial** (cartes cliquables, CTA visibles, pas de page interminable).  
-Ne pas remplir les vides : hiérarchie + respiration + précision + présence industrielle.
+Priorité : parcours commercial. Respiration plutôt que remplissage.
 
 ---
 
 ## 12. SEO
 
-| Page | Title **[PROVISOIRE]** | Description **[PROVISOIRE]** dérivée copy confirmée |
-|------|------------------------|-----------------------------------------------------|
-| `/solutions` | Solutions \| Pacifique Auto | Véhicules, pièces, maintenance, flotte et financement. |
-| `/solutions/vehicules` | Véhicules \| Pacifique Auto | Solutions véhicules pour les opérations industrielles et logistiques. |
-| `/solutions/pieces-services` | Pièces & Services \| Pacifique Auto | Pièces et services pour la disponibilité des parcs. |
-| `/solutions/maintenance` | Maintenance \| Pacifique Auto | Maintenance et support technique. |
-| `/solutions/fleet-mobility` | Fleet & Mobility \| Pacifique Auto | Accompagnement flotte et mobilité. |
-| `/solutions/financement` | Financement \| Pacifique Auto | Solutions de financement associées aux équipements. |
-
-Règles :
-
-- Un H1 par page.  
-- Canonical = route `ROUTE_MAP`.  
-- `noindex` **[OPEN]** tant que le site n’est pas en recette publique (homepage actuelle `noindex`).  
-- Redirect `/services` déjà prévu.  
-- Pas de schema produit inventé (pas de SKU).  
-- Langue `fr` (`site.ts`).
+Titles / descriptions **[PROVISOIRE]** dérivés des intros **[CONFIRMÉ]** (inchangés vs spec précédente).  
+Un H1. Canonical = `ROUTE_MAP`. Langue `fr`. Pas de schema SKU. Redirect `/services`.  
+`noindex` avant cutover : **[OPEN]** (homepage actuelle `noindex`).
 
 ---
 
 ## 13. Dépendances
 
-### 13.1 Pour spécifier (cette phase) — satisfait
+3A : satisfait (docs seulement).
 
-Shell · tokens · 5 routes · copy homepage · IMAGE_MAP · CTA `/devis` `/contact`.
-
-### 13.2 Pour implémenter (Phase 3B — non commencée)
-
-| Dépendance | État | Blocage |
-|------------|------|---------|
-| Pages `/devis` `/contact` | `planned` | Liens 404 acceptables comme homepage, ou pages minimales **hors 3A** |
-| Page `/financement` outil | `planned` + ownership **[OPEN]** | Lien structurel OK ; pas de faux calculateur |
-| IMG pièces / atelier / flotte | Manquants | Fallback typo |
-| Logos | Manquants | Pas de fabrication |
-| Content model `src/data/solutions.ts` | Absent | 3B pourra extraire `homeSolutions` — **pas dans 3A** |
-| PacifiqueOS URL | `null` | Hors Solutions |
-
-Ordre `PAGE_DEPENDENCY_MAP` : après homepage → hub Solutions → leafs véhicules → … → financement.  
-Véhicules en premier leaf (seul asset).
-
-### 13.3 Hors scope 3A / 3B Solutions
-
-Industries, Marques (sauf liens), Projets, calculateur, configurateur, RDV, catalogue pièces, PacifiqueOS.
+3B (non commencée) : shell + tokens + cette spec. Liens `/devis` `/contact` / outils = 404 acceptables comme homepage tant que non construits.  
+Hors scope Solutions : Industries, Marques (sauf liens/labels), Projets, UI outils, PacifiqueOS, catalogue pièces.
 
 ---
 
 ## 14. Risques
 
-| Risque | Impact | Mitigation |
-|--------|--------|------------|
-| Traiter legacy `services.html` comme source égale à l’IA | 6ᵉ famille RAZEL, Alios, CFAO | IA + homepage MASTER priment |
-| IMG-001 en hero du hub | Dilution SINOTRUK / erreur homepage | Réservé Véhicules |
-| Inventer un catalogue HOHAN+ | Fausse offre | Un modèle nommé max, contexte pas listing |
-| Fleet = mini-OS | Mélange public / SaaS | Copy accompagnement seulement |
-| CTA Configurateur / RDV depuis ROUTE_MAP | Liens outils vides + ownership OS | Brief 3A : Devis + Contact |
-| `/financement` vs `/solutions/financement` | SEO / confusion | Rôles distincts, copy qui oriente |
-| `/recherche` vendu comme moteur pièces | Fausse fonction | Interdit |
-| Copy legacy « certifiées d'origine / stock renouvelé » | Promesse non prouvée | Omettre ou **[OPEN]** |
+| Risque | Mitigation VERROUILLÉE |
+|--------|------------------------|
+| IMG-001 hero hub | Navy + typo seulement |
+| 6ᵉ solution (outil ou RAZEL) | 5 familles ; outils en S4 |
+| Fleet = OS | §2.1 interdits |
+| Alios / CFAO | Non affichés |
+| Constructeurs legacy | SINOTRUK / HOHAN seulement |
+| Claims techniques | §9.2 / §9.3 |
+| Inventer un configurateur / calculateur / booking | Liens d’intention seulement |
 
 ---
 
-## 15. OPEN DECISIONS
+## 15. OPEN DECISIONS restantes
 
-Ne pas résoudre par invention.
+Uniquement ce que le repository ne permet pas de résoudre :
 
-1. **Périmètre réel Fleet & Mobility** (location, conseil, gestion de parc, simple pont véhicules/maintenance).  
-2. **Ownership `/financement` et `/configurateur`** : site public vs PacifiqueOS.  
-3. **Affichage `/rendez-vous`** sur Maintenance.  
-4. **Partenariat Alios** — interdit à l’écran tant que non confirmé.  
-5. **CFAO Mobility** comme mention de livraison.  
-6. **Constructeurs hors SINOTRUK** (Mercedes, Volvo, DAF, Renault Trucks, Fruehauf) sur la page Véhicules.  
-7. **Marques pièces hors WABCO/BOSCH** (Mahle, Ren-Par, BPW).  
-8. **Claim « pièces d’origine / certifiées ».**  
-9. **Diagnostic / urgence** comme services nommés.  
-10. **`noindex`** des pages Solutions avant cutover.  
-11. **Hero visuel du hub** (pack IMG-SOL-HUB vs navy typographique).  
-12. **Champs `/devis`** (types de demande legacy) — hors 3A mais impacte les CTA.  
-13. **Négoce international / RAZEL** : autre hub, jamais 6ᵉ solution.  
-14. **Mise à jour ROUTE_MAP CTA** pour aligner Configurateur / RDV / Calculateur (écart §0.7).  
+1. **Contenu exact des véhicules disponibles** (hors SINOTRUK HOHAN déjà présent).  
+2. **Catalogue réel de pièces** (aucune base).  
+3. **Capacités exactes de maintenance** (au-delà de maintenance / entretien / support).  
+4. **Périmètre réel Fleet & Mobility** (profondeur opérationnelle ; le cadrage commercial §2.1 est verrouillé).  
+5. **Fonctionnement réel du configurateur.**  
+6. **Fonctionnement réel du calculateur.**  
+7. **Fonctionnement réel du rendez-vous.**  
+8. **Marques actuellement distribuées** (hors labels IA SINOTRUK / WABCO / BOSCH sans claim).  
+9. **Assets visuels supplémentaires** (aucun autre fichier image de contenu).  
+10. **`noindex` cutover** (recette publique).  
+
+**Clos par arbitrage :** Alios / CFAO à l’écran · constructeurs legacy sur Véhicules · claims partenaire / origine / diagnostic constructeur · hero hub IMG-001 · structure S0–S7 · CTA globaux · séparation solutions / outils · Fleet comme solution commerciale sans OS.
 
 ---
 
-## 16. Critères d’acceptation (Phase 3B — non exécutée ici)
+## 16. Critères d’acceptation (Phase 3B — non exécutée)
 
-Une implémentation future n’est acceptable que si :
-
-1. Exactement 5 familles, labels et routes identiques à `navigation.ts`.  
-2. `/solutions` permet Explorer → Choisir → Devis sans page encyclopédique.  
-3. Chaque leaf a Devis + Contact ; Financement a le lien `/financement` ; pas Alios.  
-4. IMG-001 uniquement Véhicules / SINOTRUK.  
-5. Aucun catalogue SKU, aucun projet inventé, aucun KPI, aucun logo fabriqué.  
-6. Fleet & Mobility ne ressemble pas à PacifiqueOS.  
-7. Copy leaf intros = `homeSolutions` (ou validation éditoriale explicite).  
-8. Continuité visuelle homepage (palette, typo, CTA, spacing).  
-9. Responsive 1440 / 1024 / 768 / 390 / 375 : pas de débordement, H1 lisible, CTA utilisables.  
-10. `npm run build` OK ; QA_CHECKLIST visuel / fonctionnel / technique.  
-11. Breadcrumbs corrects.  
-12. Aucune 6ᵉ carte (RAZEL, négoce, Yassa).  
+1. 5 familles uniquement, labels `navigation.ts`.  
+2. Hub = besoin → solution → outil si pertinent → devis / contact.  
+3. Structure S0–S7, page non encyclopédique.  
+4. Hero `/solutions` navy + typo, **sans** IMG-001.  
+5. IMG-001 uniquement Véhicules / SINOTRUK.  
+6. Pas Alios, pas CFAO, pas constructeurs non confirmés.  
+7. Pas de claims §9.2.  
+8. Fleet sans fonctions OS.  
+9. Outils = liens, pas de fausse UI.  
+10. CTA globaux Devis + Contact.  
+11. Continuité visuelle homepage.  
+12. Responsive 1440 / 1024 / 768 / 390 / 375.  
+13. `npm run build` OK + QA_CHECKLIST.  
 
 ---
 
-## 17. Livrables Phase 3A & STOP
+## 17. Livrable 3A & STOP
 
-Créé : ce fichier `docs/pacifique-auto/SOLUTIONS_MASTER_SPEC.md`.  
-IMAGE_MAP global : section Solutions ajoutée par pointeur (usage IMG-001 + manquants).  
+Ce fichier, mis à jour après arbitrage.  
+IMAGE_MAP : usage Solutions aligné (IMG-001, manquants scannés, hero hub sans photo).
 
-**Aucun code. Aucun composant. Aucune page. Pas de Phase 3B.**
+**Aucun code. Aucune page. Aucun composant. Pas de Phase 3B.**
 
-*Fin SOLUTIONS_MASTER_SPEC.*
+*Fin SOLUTIONS_MASTER_SPEC — arbitrage final.*

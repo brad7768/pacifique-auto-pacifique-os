@@ -1,0 +1,103 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { relatedSolutions, solutionSeo } from '../../data/solutions';
+
+const related = relatedSolutions('/solutions/maintenance').slice(0, 3);
+
+const points = [
+  { title: 'Maintenance', text: 'Maintenance des équipements.' },
+  { title: 'Entretien', text: 'Entretien pour la continuité d’exploitation.' },
+  { title: 'Support technique', text: 'Support technique associé au parc.' },
+  { title: 'Accompagnement', text: 'Accompagnement des opérations.' },
+  { title: 'Disponibilité', text: 'Orientation vers la disponibilité des équipements.' },
+] as const;
+---
+
+<SolutionLayout title={solutionSeo.maintenance.title} description={solutionSeo.maintenance.description}>
+  <Hero
+    eyebrow="Maintenance"
+    description="Maintenance et support technique."
+    minHeight={false}
+    class="pa-sol-hero pa-sol-page-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions', href: '/solutions' },
+          { label: 'Maintenance' },
+        ]}
+      />
+      <h1 class="pa-display">Maintenance</h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/rendez-vous" variant="inverse-outline">Prendre rendez-vous</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Service"
+        title="Maintenance et accompagnement technique"
+        intro="Formulations limitées à ce qui est documenté. Pas de promesse de certification ou de diagnostic constructeur."
+      />
+      <div class="pa-grid pa-grid--3">
+        {
+          points.map((point) => (
+            <FeatureCard title={point.title} description={point.text}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Outil" title="Prendre rendez-vous" intro="Prise de rendez-vous atelier — parcours dédié." />
+      <div class="pa-sol-panel">
+        <p class="pa-body">Le rendez-vous n’est pas traité dans cette page. Il oriente vers l’outil atelier.</p>
+        <div class="pa-cluster">
+          <Button href="/devis" variant="primary">Demander un devis</Button>
+          <Button href="/rendez-vous" variant="secondary">Prendre rendez-vous</Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Suite" title="Solutions associées" />
+      <div class="pa-grid pa-grid--3">
+        {
+          related.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

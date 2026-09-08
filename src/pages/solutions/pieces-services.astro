@@ -1,0 +1,110 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { partsLabels, relatedSolutions, solutionSeo } from '../../data/solutions';
+
+const related = relatedSolutions('/solutions/pieces-services').slice(0, 3);
+
+const axes = [
+  { title: 'Pièces', text: 'Pièces pour la disponibilité des parcs.' },
+  { title: 'Approvisionnement', text: 'Approvisionnement associé aux pièces et services.' },
+  { title: 'Disponibilité', text: 'Accompagnement pour maintenir la disponibilité.' },
+] as const;
+---
+
+<SolutionLayout title={solutionSeo.pieces.title} description={solutionSeo.pieces.description}>
+  <Hero
+    eyebrow="Pièces & Services"
+    description="Pièces et services pour la disponibilité des parcs."
+    minHeight={false}
+    class="pa-sol-hero pa-sol-page-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions', href: '/solutions' },
+          { label: 'Pièces & Services' },
+        ]}
+      />
+      <h1 class="pa-display">Pièces &amp; Services</h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Besoin"
+        title="Trouver, obtenir, maintenir la disponibilité"
+        intro="Pas de catalogue en ligne sur cette page. Une demande oriente vers l’accompagnement pièces et services."
+      />
+      <div class="pa-grid pa-grid--3">
+        {
+          axes.map((axis) => (
+            <FeatureCard title={axis.title} description={axis.text}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader
+        label="Références"
+        title="Labels au catalogue"
+        intro="Mentions d’architecture. Aucun claim de partenariat."
+      />
+      <div class="pa-sol-labels">
+        {partsLabels.map((label) => (
+          <a class="pa-sol-label" href={label.href}>{label.name}</a>
+        ))}
+      </div>
+      <div class="pa-cluster pa-sol-cta">
+        <Button href="/reseau/global-parts" variant="outline">Global Parts Network</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Suite" title="Solutions associées" />
+      <div class="pa-grid pa-grid--3">
+        {
+          related.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-sol-cta">
+        <Button href="/devis" variant="primary">Demander un devis</Button>
+        <Button href="/contact" variant="outline">Nous contacter</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

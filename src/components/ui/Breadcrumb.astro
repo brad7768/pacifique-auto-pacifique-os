@@ -5,12 +5,13 @@ export type Crumb = { label: string; href?: string };
 
 interface Props {
   items: Crumb[];
+  inverse?: boolean;
   class?: string;
 }
-const { items, class: className = '' } = Astro.props;
+const { items, inverse = false, class: className = '' } = Astro.props;
 ---
 
-<nav class:list={['pa-breadcrumb', className]} aria-label="Fil d'Ariane">
+<nav class:list={['pa-breadcrumb', inverse && 'pa-breadcrumb--inverse', className]} aria-label="Fil d'Ariane">
   <ol class="pa-breadcrumb__list" role="list">
     {items.map((item, index) => {
       const isLast = index === items.length - 1;
@@ -54,5 +55,18 @@ const { items, class: className = '' } = Astro.props;
   [aria-current='page'] {
     color: var(--pa-color-text);
     font-weight: var(--pa-weight-medium);
+  }
+
+  .pa-breadcrumb--inverse,
+  .pa-breadcrumb--inverse :global(.pa-link--muted) {
+    color: var(--pa-color-text-on-dark-muted);
+  }
+
+  .pa-breadcrumb--inverse [aria-current='page'] {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-breadcrumb--inverse :global(.pa-link--muted:hover) {
+    color: var(--pa-color-text-inverse);
   }
 </style>

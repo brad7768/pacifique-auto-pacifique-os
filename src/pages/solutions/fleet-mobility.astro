@@ -1,0 +1,88 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { fleetPillars, relatedSolutions, solutionSeo } from '../../data/solutions';
+
+const related = relatedSolutions('/solutions/fleet-mobility').filter((item) =>
+  ['/solutions/vehicules', '/solutions/maintenance', '/solutions/financement'].includes(item.href)
+);
+---
+
+<SolutionLayout title={solutionSeo.fleet.title} description={solutionSeo.fleet.description}>
+  <Hero
+    eyebrow="Fleet & Mobility"
+    description="Accompagnement flotte et mobilité."
+    minHeight={false}
+    class="pa-sol-hero pa-sol-page-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions', href: '/solutions' },
+          { label: 'Fleet & Mobility' },
+        ]}
+      />
+      <h1 class="pa-display">Fleet &amp; Mobility</h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Accompagnement"
+        title="Pacifique Auto peut vous accompagner sur vos besoins de flotte"
+        intro="Proposition commerciale : acquisition, mobilité, accompagnement, maintenance et financement associés. Pas une interface de gestion."
+      />
+      <div class="pa-grid pa-grid--3 pa-sol-pillars">
+        {
+          fleetPillars.map((pillar) => (
+            <FeatureCard title={pillar.title} description={pillar.description} href={pillar.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Suite" title="Véhicules, maintenance, financement" />
+      <div class="pa-grid pa-grid--3">
+        {
+          related.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-sol-cta">
+        <Button href="/devis" variant="primary">Demander un devis</Button>
+        <Button href="/contact" variant="outline">Nous contacter</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

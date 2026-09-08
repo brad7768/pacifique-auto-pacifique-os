@@ -1,0 +1,96 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { vehicleContext, relatedSolutions, solutionSeo } from '../../data/solutions';
+
+const related = relatedSolutions('/solutions/vehicules').slice(0, 3);
+---
+
+<SolutionLayout title={solutionSeo.vehicules.title} description={solutionSeo.vehicules.description}>
+  <Hero
+    eyebrow="Véhicules"
+    description="Solutions véhicules pour les opérations industrielles et logistiques."
+    imageSrc={vehicleContext.imageSrc}
+    imageAlt={vehicleContext.imageAlt}
+    minHeight={false}
+    class="pa-sol-hero pa-sol-page-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions', href: '/solutions' },
+          { label: 'Véhicules' },
+        ]}
+      />
+      <h1 class="pa-display">Véhicules</h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/configurateur" variant="inverse-outline">Configurer un véhicule</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Contexte"
+        title="SINOTRUK HOHAN"
+        intro="Constructeur et modèle documentés dans le catalogue visuel du site. Pas un listing de gamme."
+      />
+      <div class="pa-sol-panel">
+        <p class="pa-overline">{vehicleContext.brand}</p>
+          <h3 class="pa-h3">{vehicleContext.model}</h3>
+        <p class="pa-body">
+          Poids lourd présenté comme contexte d’offre véhicules. Les autres constructeurs ne sont pas listés ici.
+        </p>
+        <div class="pa-cluster">
+          <Button href="/devis" variant="primary">Demander un devis</Button>
+          <Button href={vehicleContext.brandHref} variant="outline">SINOTRUK</Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader label="Outil" title="Configurer un véhicule" intro="Outil commercial associé à cette solution." />
+      <div class="pa-sol-panel">
+        <p class="pa-body">Configuration véhicule — parcours dédié, distinct de cette page commerciale.</p>
+        <Button href="/configurateur" variant="secondary">Configurer un véhicule</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader label="Suite" title="Solutions associées" />
+      <div class="pa-grid pa-grid--3">
+        {
+          related.map((item) => (
+            <FeatureCard title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

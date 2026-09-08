@@ -1,0 +1,164 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Card from '../../components/ui/Card.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import VehicleCard from '../../components/ui/VehicleCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import {
+  solutionFamilies,
+  solutionTools,
+  solutionProof,
+  solutionSeo,
+} from '../../data/solutions';
+---
+
+<SolutionLayout title={solutionSeo.hub.title} description={solutionSeo.hub.description}>
+  <Hero
+    eyebrow="Solutions industrielles"
+    description="Véhicules, pièces, maintenance, flotte et financement."
+    minHeight={false}
+    class="pa-sol-hero"
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Solutions' },
+        ]}
+      />
+      <h1 class="pa-display">
+        <span>DES SOLUTIONS CONÇUES</span>
+        <span>POUR VOS <em>OPÉRATIONS.</em></span>
+      </h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+    </div>
+  </Hero>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Besoin"
+        title="Choisir selon son besoin"
+        intro="Identifier le besoin, puis la solution correspondante."
+      />
+      <div class="pa-grid pa-grid--3">
+        {
+          solutionFamilies.map((item) =>
+            'useVehicleCard' in item && item.useVehicleCard ? (
+              <VehicleCard
+                class="pa-sol-need"
+                title={item.title}
+                description={item.description}
+                href={item.href}
+                imageSrc={item.imageSrc}
+                imageAlt={item.imageAlt}
+                model={item.need}
+              />
+            ) : (
+              <Card href={item.href} class="pa-sol-need">
+                <p class="pa-overline">{item.need}</p>
+                <h3 class="pa-h3">{item.title}</h3>
+              </Card>
+            )
+          )
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle">
+    <Container>
+      <SectionHeader
+        label="Solutions"
+        title="Ce que propose Pacifique Auto"
+        intro="Cinq familles. Pas un catalogue. Une infrastructure de solutions pour les opérations industrielles."
+      />
+      <div class="pa-sol-deepen">
+        {
+          solutionFamilies.map((item) => (
+            <a class="pa-sol-deepen__row" href={item.href}>
+              <span class="pa-sol-deepen__need">{item.need}</span>
+              <span>
+                <h3 class="pa-h3">{item.title}</h3>
+                <p class="pa-body">{item.description}</p>
+              </span>
+              <span class="pa-overline">Découvrir</span>
+            </a>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <SectionHeader
+        label="Outils"
+        title="Outils commerciaux associés"
+        intro="Des outils d’aide à la décision. Ils ne sont pas des solutions supplémentaires."
+      />
+      <div class="pa-grid pa-grid--3">
+        {
+          solutionTools.map((tool) => (
+            <FeatureCard
+              class="pa-sol-tool"
+              title={tool.label}
+              description={tool.description}
+              href={tool.href}
+              tags={[tool.context]}
+            >
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="primary-mid">
+    <Container>
+      <SectionHeader
+        label="Confiance"
+        title="Pourquoi Pacifique Auto"
+        intro="Une infrastructure industrielle et commerciale B2B."
+        inverse
+      />
+      <div class="pa-grid pa-grid--2 pa-sol-proof">
+        {
+          solutionProof.map((pillar, i) => (
+            <article class="pa-sol-proof__item">
+              <span class="pa-sol-proof__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="pa-h4 pa-text-inverse">{pillar.title}</h3>
+                <p class="pa-body pa-sol-proof__text">{pillar.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-sol-cta">
+        <Button href="/devis" variant="primary">Demander un devis</Button>
+        <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</SolutionLayout>

@@ -1,0 +1,72 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  number?: string;
+  title: string;
+  description: string;
+  href?: string;
+  tags?: string[];
+  class?: string;
+}
+const { number, title, description, href, tags = [], class: className = '' } = Astro.props;
+---
+
+<Card href={href} class:list={['pa-feature-card', className]} interactive={Boolean(href) || true}>
+  {number && <div class="pa-feature-card__num" aria-hidden="true">{number}</div>}
+  <div class="pa-feature-card__icon">
+    <slot name="icon" />
+  </div>
+  <h3 class="pa-h3">{title}</h3>
+  <p class="pa-body">{description}</p>
+  {tags.length > 0 && (
+    <div class="pa-feature-card__tags">
+      {tags.map((tag) => <span class="pa-feature-card__tag">{tag}</span>)}
+    </div>
+  )}
+  <slot />
+</Card>
+
+<style>
+  .pa-feature-card {
+    position: relative;
+  }
+
+  .pa-feature-card__num {
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-black);
+    font-size: var(--pa-text-stat-xl);
+    color: var(--pa-color-bg-subtle);
+    line-height: 1;
+    position: absolute;
+    top: var(--pa-space-4);
+    right: var(--pa-space-6);
+  }
+
+  .pa-feature-card__icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    background: var(--pa-color-bg-subtle);
+    border-radius: var(--pa-radius-sm);
+    display: grid;
+    place-items: center;
+    margin-bottom: var(--pa-space-5);
+  }
+
+  .pa-feature-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pa-space-2);
+    margin-top: var(--pa-space-5);
+  }
+
+  .pa-feature-card__tag {
+    font-size: var(--pa-text-micro);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: var(--pa-space-1) var(--pa-space-2);
+    background: var(--pa-color-bg-subtle);
+    color: var(--pa-color-text-muted);
+    border-radius: var(--pa-radius-xs);
+  }
+</style>

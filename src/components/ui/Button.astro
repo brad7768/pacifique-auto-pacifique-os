@@ -1,0 +1,129 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'inverse-outline';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  fullWidth?: boolean;
+  [key: string]: unknown;
+}
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  fullWidth = false,
+  ...rest
+} = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['pa-btn', `pa-btn--${variant}`, `pa-btn--${size}`, fullWidth && 'pa-btn--full', className]}
+  href={href}
+  type={href ? undefined : type}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .pa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--pa-space-3);
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-bold);
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--pa-radius-sm);
+    border: var(--pa-border-width-strong) solid transparent;
+    transition:
+      background var(--pa-duration) var(--pa-ease),
+      border-color var(--pa-duration) var(--pa-ease),
+      color var(--pa-duration) var(--pa-ease),
+      transform var(--pa-duration-fast) var(--pa-ease),
+      box-shadow var(--pa-duration) var(--pa-ease);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .pa-btn--sm {
+    font-size: var(--pa-text-overline);
+    padding: var(--pa-space-2) var(--pa-space-5);
+  }
+
+  .pa-btn--md {
+    font-size: 0.9375rem;
+    padding: 0.9375rem 2rem;
+  }
+
+  .pa-btn--lg {
+    font-size: 1rem;
+    padding: var(--pa-space-5) var(--pa-space-8);
+  }
+
+  .pa-btn--full {
+    width: 100%;
+  }
+
+  .pa-btn--primary {
+    background: var(--pa-color-accent);
+    color: var(--pa-color-text-inverse);
+    border-color: var(--pa-color-accent);
+  }
+
+  .pa-btn--primary:hover {
+    background: var(--pa-color-accent-hot);
+    border-color: var(--pa-color-accent-hot);
+    transform: translateY(-1px);
+    box-shadow: var(--pa-shadow-accent);
+  }
+
+  .pa-btn--secondary {
+    background: var(--pa-color-primary);
+    color: var(--pa-color-text-inverse);
+    border-color: var(--pa-color-primary);
+  }
+
+  .pa-btn--secondary:hover {
+    background: var(--pa-color-primary-mid);
+    border-color: var(--pa-color-primary-mid);
+  }
+
+  .pa-btn--outline {
+    background: transparent;
+    color: var(--pa-color-primary);
+    border-color: var(--pa-color-border);
+  }
+
+  .pa-btn--outline:hover {
+    border-color: var(--pa-color-primary);
+    background: var(--pa-color-bg-subtle);
+  }
+
+  .pa-btn--inverse-outline {
+    background: transparent;
+    color: var(--pa-color-text-inverse);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .pa-btn--inverse-outline:hover {
+    border-color: var(--pa-color-text-inverse);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .pa-btn--ghost {
+    background: transparent;
+    color: var(--pa-color-primary);
+    border-color: transparent;
+  }
+
+  .pa-btn--ghost:hover {
+    color: var(--pa-color-accent);
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+import Button from './Button.astro';
+import Section from './Section.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  inverse?: boolean;
+  class?: string;
+}
+const {
+  title,
+  description,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  inverse = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<Section
+  class:list={['pa-cta-section', className]}
+  tone={inverse ? 'inverse' : 'subtle'}
+>
+  <div class="pa-cta-section__inner">
+    <h2 class:list={['pa-h2', inverse && 'pa-text-inverse']}>{title}</h2>
+    {description && <p class:list={['pa-body', inverse && 'pa-cta-section__desc']}>{description}</p>}
+    <div class="pa-cluster">
+      <Button href={primaryHref} variant="primary">{primaryLabel}</Button>
+      {secondaryLabel && secondaryHref && (
+        <Button href={secondaryHref} variant={inverse ? 'inverse-outline' : 'outline'}>
+          {secondaryLabel}
+        </Button>
+      )}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .pa-cta-section__inner {
+    max-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-5);
+  }
+
+  .pa-cta-section__desc {
+    color: var(--pa-color-text-on-dark-muted);
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+interface Props {
+  label: string;
+  name: string;
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  required?: boolean;
+  placeholder?: string;
+  options?: string[];
+  rows?: number;
+  class?: string;
+}
+const {
+  label,
+  name,
+  type = 'text',
+  required = false,
+  placeholder = '',
+  options = [],
+  rows = 4,
+  class: className = '',
+} = Astro.props;
+const id = `field-${name}`;
+---
+
+<label class:list={['pa-field', className]} for={id}>
+  <span class="pa-field__label">
+    {label}
+    {required && <abbr title="requis">*</abbr>}
+  </span>
+  {type === 'textarea' ? (
+    <textarea id={id} name={name} rows={rows} required={required} placeholder={placeholder}></textarea>
+  ) : type === 'select' ? (
+    <select id={id} name={name} required={required}>
+      <option value="">{placeholder || 'Choisir…'}</option>
+      {options.map((opt) => <option value={opt}>{opt}</option>)}
+    </select>
+  ) : (
+    <input id={id} name={name} type={type} required={required} placeholder={placeholder} />
+  )}
+</label>
+
+<style>
+  .pa-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-2);
+  }
+
+  .pa-field__label {
+    font-family: var(--pa-font-display);
+    font-size: var(--pa-text-overline);
+    font-weight: var(--pa-weight-bold);
+    letter-spacing: var(--pa-tracking-widest);
+    text-transform: uppercase;
+    color: var(--pa-color-text);
+  }
+
+  .pa-field__label abbr {
+    color: var(--pa-color-accent);
+    text-decoration: none;
+  }
+
+  .pa-field :global(input),
+  .pa-field :global(select),
+  .pa-field :global(textarea) {
+    font-family: var(--pa-font-body);
+    font-size: 0.9375rem;
+    padding: var(--pa-space-3) var(--pa-space-3);
+    border: var(--pa-border-width-strong) solid var(--pa-color-border);
+    border-radius: var(--pa-radius-xs);
+    background: var(--pa-color-bg-subtle);
+    color: var(--pa-color-text);
+    outline: none;
+    transition: border-color var(--pa-duration) var(--pa-ease);
+    width: 100%;
+  }
+
+  .pa-field :global(input:focus),
+  .pa-field :global(select:focus),
+  .pa-field :global(textarea:focus) {
+    border-color: var(--pa-color-accent);
+  }
+</style>

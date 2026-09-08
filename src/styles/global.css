@@ -1,0 +1,39 @@
+@import './tokens.css';
+@import './reset.css';
+@import './typography.css';
+@import './layout.css';
+
+body {
+  overflow-x: hidden;
+}
+
+.pa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pa-skip-link {
+  position: absolute;
+  left: var(--pa-space-4);
+  top: -100%;
+  z-index: calc(var(--pa-z-float) + 1);
+  background: var(--pa-color-accent);
+  color: var(--pa-color-text-inverse);
+  padding: var(--pa-space-3) var(--pa-space-4);
+  font-family: var(--pa-font-display);
+  font-weight: var(--pa-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--pa-tracking-wider);
+  text-decoration: none;
+}
+
+.pa-skip-link:focus {
+  top: var(--pa-space-4);
+}

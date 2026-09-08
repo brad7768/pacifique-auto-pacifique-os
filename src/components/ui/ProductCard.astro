@@ -1,0 +1,49 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  meta?: string;
+  class?: string;
+}
+const { title, description, href, imageSrc, imageAlt = '', meta, class: className = '' } = Astro.props;
+---
+
+<Card href={href} padded={false} class:list={['pa-product-card', className]}>
+  {imageSrc && (
+    <div class="pa-product-card__media">
+      <img src={imageSrc} alt={imageAlt} class="pa-media--cover" loading="lazy" />
+    </div>
+  )}
+  <div class="pa-product-card__body">
+    {meta && <p class="pa-overline">{meta}</p>}
+    <h3 class="pa-h3">{title}</h3>
+    {description && <p class="pa-body">{description}</p>}
+    <slot />
+  </div>
+</Card>
+
+<style>
+  .pa-product-card__media {
+    aspect-ratio: 16 / 10;
+    background: var(--pa-color-bg-subtle);
+    overflow: hidden;
+  }
+
+  .pa-product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pa-product-card__body {
+    padding: var(--pa-space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--pa-space-3);
+  }
+</style>

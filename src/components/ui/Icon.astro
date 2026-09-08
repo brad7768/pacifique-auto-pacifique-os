@@ -1,0 +1,32 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+/**
+ * Icon wrapper — swap for an icon set later without changing call sites.
+ * Phase 1 ships inline SVG slots only.
+ */
+const { name, size = 20, class: className = '' } = Astro.props;
+---
+
+<span class:list={['pa-icon', className]} data-icon={name} style={`--pa-icon-size: ${size}px`} aria-hidden="true">
+  <slot />
+</span>
+
+<style>
+  .pa-icon {
+    display: inline-flex;
+    width: var(--pa-icon-size);
+    height: var(--pa-icon-size);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .pa-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

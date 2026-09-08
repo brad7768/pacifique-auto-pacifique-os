@@ -1,0 +1,64 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  padded?: boolean;
+  interactive?: boolean;
+}
+const {
+  href,
+  class: className = '',
+  padded = true,
+  interactive = Boolean(href),
+} = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  class:list={['pa-card', padded && 'pa-card--padded', interactive && 'pa-card--interactive', className]}
+  href={href}
+>
+  <slot />
+</Tag>
+
+<style>
+  .pa-card {
+    display: block;
+    background: var(--pa-color-surface);
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pa-card--padded {
+    padding: var(--pa-space-8) var(--pa-space-7);
+  }
+
+  .pa-card--interactive {
+    transition:
+      box-shadow var(--pa-duration-med) var(--pa-ease),
+      transform var(--pa-duration-med) var(--pa-ease);
+  }
+
+  .pa-card--interactive::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: var(--pa-border-width-accent);
+    background: var(--pa-color-accent);
+    transition: width var(--pa-duration-slow) var(--pa-ease);
+  }
+
+  .pa-card--interactive:hover {
+    box-shadow: var(--pa-shadow-xl);
+    transform: translateY(-4px);
+    z-index: var(--pa-z-base);
+  }
+
+  .pa-card--interactive:hover::before {
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,151 @@
+---
+import { primaryNav, commercialActions } from '../../data/navigation';
+import Logo from '../ui/Logo.astro';
+import Button from '../ui/Button.astro';
+import MegaMenu from './MegaMenu.astro';
+import MobileNav from './MobileNav.astro';
+
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = Astro.url.pathname } = Astro.props;
+---
+
+<header class="pa-header" id="site-header" data-header>
+  <div class="pa-header__inner pa-container pa-container--wide">
+    <Logo href="/" />
+
+    <nav class="pa-header__nav" aria-label="Navigation principale">
+      <MegaMenu items={primaryNav} currentPath={currentPath} />
+    </nav>
+
+    <div class="pa-header__actions">
+      <a class="pa-header__search pa-nav-label" href={commercialActions.search.href} aria-label="Recherche">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M20 20l-3-3"></path>
+        </svg>
+      </a>
+      <a class="pa-header__client pa-nav-label" href={commercialActions.client.href}>
+        {commercialActions.client.label}
+      </a>
+      <Button href={commercialActions.primary.href} variant="primary" size="sm" class="pa-header__cta">
+        {commercialActions.primary.label}
+      </Button>
+      <button
+        class="pa-header__burger"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        data-mobile-toggle
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <MobileNav items={primaryNav} currentPath={currentPath} />
+</header>
+
+<style>
+  .pa-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: var(--pa-z-header);
+    height: var(--pa-header-height);
+    background: rgba(9, 24, 58, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: var(--pa-border-width-strong) solid var(--pa-color-accent);
+    transition: box-shadow var(--pa-duration-med) var(--pa-ease);
+  }
+
+  .pa-header.is-scrolled {
+    box-shadow: var(--pa-shadow-nav);
+  }
+
+  .pa-header__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pa-space-4);
+  }
+
+  .pa-header__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .pa-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--pa-space-4);
+  }
+
+  .pa-header__search,
+  .pa-header__client {
+    color: var(--pa-color-text-on-dark-muted);
+    text-decoration: none;
+    transition: color var(--pa-duration) var(--pa-ease);
+  }
+
+  .pa-header__search:hover,
+  .pa-header__client:hover {
+    color: var(--pa-color-text-inverse);
+  }
+
+  .pa-header__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--pa-space-1);
+  }
+
+  .pa-header__burger span {
+    display: block;
+    width: 1.625rem;
+    height: 2px;
+    background: var(--pa-color-text-inverse);
+  }
+
+  @media (max-width: 1100px) {
+    .pa-header__client,
+    .pa-header__cta {
+      display: none;
+    }
+
+    .pa-header__burger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  function initHeader() {
+    const header = document.querySelector('[data-header]');
+    const toggle = document.querySelector('[data-mobile-toggle]');
+    const mobile = document.querySelector('[data-mobile-nav]');
+    if (!(header instanceof HTMLElement)) return;
+
+    const onScroll = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    if (toggle instanceof HTMLButtonElement && mobile instanceof HTMLElement) {
+      toggle.addEventListener('click', () => {
+        const open = !mobile.classList.contains('is-open');
+        mobile.hidden = !open;
+        mobile.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      });
+    }
+  }
+
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
+</script>

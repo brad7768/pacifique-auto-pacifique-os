@@ -1,0 +1,26 @@
+---
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  title: string;
+  model?: string;
+  description?: string;
+  href?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  class?: string;
+}
+const { title, model, description, href, imageSrc, imageAlt = '', class: className = '' } = Astro.props;
+---
+
+<ProductCard
+  title={title}
+  description={description}
+  href={href}
+  imageSrc={imageSrc}
+  imageAlt={imageAlt}
+  meta={model ?? 'Véhicule'}
+  class:list={['pa-vehicle-card', className]}
+>
+  <slot />
+</ProductCard>

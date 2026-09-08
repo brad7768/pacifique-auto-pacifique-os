@@ -1,86 +1,114 @@
 # IMAGE MAP — Pacifique Auto
 
 **Règle :** aucune image n’est utilisée sans entrée dans cette carte.  
-**Phase 1 :** inventaire + extraction ; pas d’usage marketing homepage.
+**Scan repository :** 2026-09-08 (hors `node_modules`, `.git`, `dist`).  
+**Homepage :** voir aussi `PACIFIQUE_AUTO_HOMEPAGE_MASTER_SPEC.md` §22.
 
 ---
 
-## 1. Assets disponibles
+## 0. Méthode
+
+```
+SCAN ASSETS → CLASSIFICATION → SUJET → CONTEXTE
+→ SECTION/PAGE COMPATIBLE → PRIORITÉ → RATIO → CROP D/M
+```
+
+IMG-001 n’est **pas** un filler universel.
+
+---
+
+## 1. Assets réellement présents
 
 ### IMG-001 — SINOTRUK HOHAN 8×4
 
 | Champ | Valeur |
 |-------|--------|
 | Nom | `hero-sinotruk-hohan.jpg` |
-| Chemin | `/public/assets/images/hero-sinotruk-hohan.jpg` |
-| Type | Photographie produit / flotte |
+| Chemin fichier | `public/assets/images/hero-sinotruk-hohan.jpg` |
+| URL runtime | `/assets/images/hero-sinotruk-hohan.jpg` |
+| Type | Photographie produit |
 | Format | JPEG |
 | Dimensions | 1500 × 2000 |
-| Orientation | Portrait (camion 3/4 avant) |
-| Sujet | Camion benne blanc SINOTRUK HOHAN, bull bar, chantier |
-| Qualité | Bonne (catalogue) ; fond chargé (autres véhicules) — crop recommandé |
-| Origine | Extraite du base64 legacy (`styles.css` / `index.html`) |
+| Orientation | **Portrait** |
+| Sujet | Camion benne blanc SINOTRUK HOHAN, bull bar |
+| Classification | véhicules · camions · marque SINOTRUK |
+| Contexte | Catalogue poids lourd / constructeur SINOTRUK |
+| Qualité | Catalogue ; fond chargé (autres véhicules) — crop recommandé |
+| Origine | Extraite du base64 legacy |
 | Hash SHA256 (12) | `ad4ad25c9eb1` |
-| Pages candidates | `/`, `/solutions/vehicules`, `/marques/sinotruk`, heroes flotte |
-| Rôle recommandé | Hero produit, VehicleCard, preuve catalogue SINOTRUK |
-| Interdit | Industries non transport (agriculture/énergie) sans contexte |
+| Pages / sections compatibles | `/solutions/vehicules` · `/marques/sinotruk` · homepage **S3 Véhicules uniquement** |
+| Priorité | Haute **dans ces contextes** |
+| Ratio d’usage recommandé | Card 16:10 (crop depuis portrait) |
+| Crop desktop | Cabine + benne, centre |
+| Crop mobile | Cabine serrée |
+| **Interdit** | Hero homepage par défaut · industries hors transport lourd · filler S2–S10 |
 
-### IMG-002 — Architecture visuelle (référence, non prod)
+### IMG-002 — Architecture visuelle
 
 | Champ | Valeur |
 |-------|--------|
 | Nom | `architecture-visuelle.png` |
-| Chemin | `/public/assets/reference/architecture-visuelle.png` |
-| Type | Document sitemap / maquette architecture |
-| Dimensions | 1223 × 1286 |
-| Usage | Référence IA uniquement |
-| **Ne pas** servir comme image de contenu site |
+| Chemin | `public/assets/reference/architecture-visuelle.png` (+ doublon `legacy/1BFC44D9-….png`) |
+| Classification | document IA / sitemap |
+| Usage | Référence hiérarchie site **uniquement** |
+| **Interdit** | Image de contenu, hero, cards |
 
-### IMG-003 — Logo wordmark
+### IMG-FAVICON-ASTRO
 
 | Champ | Valeur |
 |-------|--------|
-| Statut | **MANQUANT** |
-| Workaround Phase 1 | Composant `Logo.astro` (pastille PA + texte) |
-| Action | Fournir SVG/PNG officiel PACIFIQUE AUTO |
+| Fichiers | `public/favicon.svg`, `public/favicon.ico` |
+| Sujet | Logo **Astro** (template) |
+| Classification | technique / défaut scaffold |
+| **Interdit** | Identité Pacifique Auto |
+| Action | Remplacer par favicon marque quand le wordmark officiel est livré |
 
-### IMG-004+ — Logos marques (SINOTRUK, WABCO, BOSCH, etc.)
+### Doublons legacy (ne plus publier)
 
-| Statut | **MANQUANTS** |
-| Action | Pack logos autorisés avant pages Marques |
-
-### IMG-005+ — Industries / projets / réseau
-
-| Statut | **MANQUANTS** |
-| Besoin | Photos BTP, mines, transport, agriculture, énergie, map implantations, chantiers |
+`legacy/styles.css`, `legacy/index.html`, `legacy/index2.html` — data-URI = IMG-001.
 
 ---
 
-## 2. Legacy duplicates (ne plus utiliser en prod)
+## 2. Absents après scan (réellement manquants)
 
-| Emplacement legacy | Note |
-|--------------------|------|
-| `legacy/styles.css` data-URI | Même JPEG IMG-001 |
-| `legacy/index.html` data-URI | Même JPEG |
-| `legacy/index2.html` data-URI ×2 | Même JPEG |
+Aucun autre PNG/JPG/SVG de marque, produit, chantier, logo constructeur, icône set, Yassa, Alios ou Bosch n’a été trouvé.
 
-Source unique : `public/assets/images/hero-sinotruk-hohan.jpg`.
+| ID | Classification visée | Contexte homepage | Priorité |
+|----|----------------------|-------------------|----------|
+| IMG-LOGO-PA | logo / wordmark | Header, footer | Critique prod |
+| IMG-HOME-HERO | infrastructure / flotte / industriel **landscape** | S1 Hero | Critique — **≠ IMG-001** |
+| IMG-ICON-HUBS (×7) | icônes linéaires cohérentes | S2 | Haute |
+| IMG-HOME-PIECES | pièces | S3 | Haute |
+| IMG-HOME-MAINT | atelier / maintenance | S3 | Haute |
+| IMG-HOME-FLEET | flotte | S3 | Haute |
+| IMG-HOME-FINANCE | — | S3 (texte OK sans image) | Basse |
+| IMG-HOME-IND-BTP | BTP / chantiers | S4 | Haute |
+| IMG-HOME-IND-MINES | mines | S4 | Haute |
+| IMG-HOME-IND-TRANSPORT | transport | S4 | Haute (IMG-001 **non** équivalent industrie générique) |
+| IMG-HOME-IND-AGRI | agriculture | S4 | Haute |
+| IMG-HOME-IND-ENERGIE | énergie | S4 | Haute |
+| IMG-LOGO-SINOTRUK | logo marque | S5 | Haute prod |
+| IMG-LOGO-WABCO | logo marque | S5 | Haute prod |
+| IMG-LOGO-BOSCH | logo marque | S5 | Haute prod |
+| IMG-HOME-PROJECT-* | projets réels | S7 | Si contenu validé |
+| IMG-YASSA | infrastructures | hors homepage v1 | Plus tard (Réseau) |
+| IMG-ALIOS | — | **interdit homepage** | — |
+| Carte Afrique / réseau | — | **interdit homepage v1** | Plus tard si données |
 
 ---
 
 ## 3. Politique de sélection
 
-1. Sujet aligné au message commercial de la page.
-2. Orientation adaptée au composant (hero landscape crop vs card).
-3. Pas d’image « filler » décorative abstraite.
-4. Droits / mentions constructeurs vérifiés avant publication.
-5. Toute nouvelle image → nouvelle ligne IMAGE MAP avant merge.
+1. Sujet = message commercial de la section.  
+2. Contexte d’abord, remplissage jamais.  
+3. Sans image pertinente → carte typographique, pas d’image hors sujet.  
+4. Droits constructeurs avant publication de logos.  
+5. Nouvelle image → nouvelle ligne ici **avant** merge.
 
 ---
 
-## 4. Gaps bloquants Phase 2+
+## 4. Classification (banque cible)
 
-- Wordmark vectoriel
-- Logos marques
-- Banque industries / projets
-- Visuels outils (configurateur, financement) si maquettes le demandent
+véhicules · camions · pièces · atelier · maintenance · flotte · chantiers · BTP · mines · transport · agriculture · énergie · projets · infrastructures · personnes · marques · logos · icônes
+
+**Couvert aujourd’hui :** camions / véhicules / SINOTRUK (IMG-001 seulement).

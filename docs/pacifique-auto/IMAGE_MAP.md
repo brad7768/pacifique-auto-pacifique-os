@@ -112,3 +112,22 @@ Aucun autre PNG/JPG/SVG de marque, produit, chantier, logo constructeur, icône 
 véhicules · camions · pièces · atelier · maintenance · flotte · chantiers · BTP · mines · transport · agriculture · énergie · projets · infrastructures · personnes · marques · logos · icônes
 
 **Couvert aujourd’hui :** camions / véhicules / SINOTRUK (IMG-001 seulement).
+
+---
+
+## 5. Usage Solutions (Phase 3A)
+
+Source d’exécution pages : `SOLUTIONS_MASTER_SPEC.md` §8.  
+Rescan 2026-09-08 : aucun asset nouveau depuis le scan homepage.
+
+| Page | Image autorisée | Interdit |
+|------|-----------------|----------|
+| `/solutions` (hub) | Aucune obligatoire. Hero navy typographique si IMG-SOL-HUB absent. | IMG-001 filler |
+| `/solutions/vehicules` | IMG-001 (hero page ou carte produit, crop 16:10) | Réemploi hors SINOTRUK / véhicules |
+| `/solutions/pieces-services` | **Manquant** (IMG-SOL-PIECES) | IMG-001 |
+| `/solutions/maintenance` | **Manquant** (IMG-SOL-MAINT) | IMG-001 |
+| `/solutions/fleet-mobility` | **Manquant** (IMG-SOL-FLEET) | IMG-001 |
+| `/solutions/financement` | **Manquant** (basse priorité) | IMG-001 · visuel Alios |
+
+IDs cibles absents : `IMG-SOL-HUB` · `IMG-SOL-PIECES` · `IMG-SOL-MAINT` · `IMG-SOL-FLEET` · `IMG-SOL-FINANCE` · logos constructeurs.  
+Fallback : composition typographique / cartes existantes. Ne pas générer d’images.

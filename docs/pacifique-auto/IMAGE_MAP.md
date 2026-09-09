@@ -1,7 +1,7 @@
 # IMAGE MAP — Pacifique Auto
 
 **Règle :** aucune image n’est utilisée sans entrée dans cette carte.  
-**Scan repository :** 2026-09-08 (hors `node_modules`, `.git`, `dist`).  
+**Scan repository :** 2026-09-08 ; rescan arbitrage Industries 2026-09-09 (hors `node_modules`, `.git`, `dist`). Aucun asset de contenu nouveau.  
 **Homepage :** voir aussi `PACIFIQUE_AUTO_HOMEPAGE_MASTER_SPEC.md` §22.
 
 ---
@@ -37,11 +37,12 @@ IMG-001 n’est **pas** un filler universel.
 | Origine | Extraite du base64 legacy |
 | Hash SHA256 (12) | `ad4ad25c9eb1` |
 | Pages / sections compatibles | `/solutions/vehicules` · `/marques/sinotruk` · homepage **S3 Véhicules uniquement** |
-| Priorité | Haute **dans ces contextes** |
+| Industrie possible | **Aucune.** Sujet = véhicule SINOTRUK / HOHAN. Pas un visuel de secteur. |
+| Priorité | Haute **dans ces contextes véhicules uniquement** |
 | Ratio d’usage recommandé | Card 16:10 (crop depuis portrait) |
 | Crop desktop | Cabine + benne, centre |
 | Crop mobile | Cabine serrée |
-| **Interdit** | Hero homepage par défaut · **hero `/solutions`** · industries hors transport lourd · filler S2–S10 · Pièces / Maintenance / Fleet / Financement |
+| **Interdit** | Hero homepage par défaut · **hero `/solutions`** · **toutes les pages `/industries`** (hub, leafs, cartes secteurs, S4 y compris carte Véhicules) · filler S2–S10 · Pièces / Maintenance / Fleet / Financement |
 
 ### IMG-002 — Architecture visuelle
 
@@ -132,3 +133,47 @@ Rescan arbitrage : mêmes fichiers que §1. Aucun asset nouveau. Aucune image Al
 
 Assets réellement manquants (scan) : photographie landscape hub · pièces · atelier · flotte · financement · logos constructeurs / wordmark PA.  
 Fallback verrouillé : typographie / cartes. **Ne pas générer d’images.** Un futur fichier n’entre en ligne qu’après scan + nouvelle entrée ici.
+
+---
+
+## 6. Usage Industries (Phase 4A — arbitrage)
+
+Source : `INDUSTRIES_MASTER_SPEC.md` §13.  
+Rescan arbitrage : mêmes fichiers que §1. Aucun chantier / mine / carrière / agriculture / énergie / flotte landscape. **Aucun asset nouveau.**
+
+IMG-001 est **strictement** SINOTRUK / HOHAN / véhicules. **Ne pas l’utiliser** sur les pages Industries.
+
+L’absence d’images **ne bloque pas** l’implémentation. Ne pas générer d’images. Avant de déclarer un manquant : scanner le repository (fait).
+
+| Page / surface | Image autorisée | Interdit |
+|----------------|-----------------|----------|
+| `/industries` hero (S1) | **Aucune photo.** Navy + typographie | IMG-001 · image générée |
+| Cartes hub 5 secteurs (S2) | Placeholder `IndustryCard` (navy 4:3) | IMG-001 |
+| Hub S4 cartes solutions | Typographie / cartes **sans** photo | IMG-001 **y compris** carte Véhicules |
+| `/industries/btp` | **Manquant** — navy / typo | IMG-001 |
+| `/industries/mines` | **Manquant** — navy / typo | IMG-001 |
+| `/industries/transport` | **Manquant** — navy / typo | IMG-001 (pas un visuel « transport ») |
+| `/industries/agriculture` | **Manquant** — navy / typo | IMG-001 |
+| `/industries/energie` | **Manquant** — navy / typo | IMG-001 |
+| Leaf S4 solutions | Liens typographiques | IMG-001 |
+
+### 6.1 Assets réellement trouvés (Industries)
+
+**Aucun** asset de contenu compatible Industries. IMG-001 / IMG-002 / favicons : voir §1 — hors usage Industries.
+
+### 6.2 Cible quand un vrai fichier arrivera
+
+Ne pas inventer de photos. Lorsqu’un fichier réel sera ajouté : SCAN → nouvelle ligne §1 **avant** merge, avec fichier, sujet, industrie possible, route, pertinence, priorité, ratio, crop desktop, crop mobile.
+
+Sujets visés (fichiers **absents** aujourd’hui) :
+
+| Industrie | Route | Sujet visé | Ratio cible | Crop D / M |
+|-----------|-------|------------|-------------|------------|
+| BTP | `/industries/btp` + carte hub | chantier | 4:3 `IndustryCard` | Cover sujet centre / centre |
+| Mines | `/industries/mines` + carte hub | mine / carrière | 4:3 | Cover |
+| Transport | `/industries/transport` + carte hub | flotte / transport | 4:3 | Cover |
+| Agriculture | `/industries/agriculture` + carte hub | exploitation agricole | 4:3 | Cover |
+| Énergie | `/industries/energie` + carte hub | infrastructure énergétique | 4:3 | Cover |
+
+Manquants sectoriels (scan) : BTP/chantier · mines/carrière · transport/flotte · agriculture · énergie/infrastructures.  
+Ne pas déclarer un asset présent hors §1.

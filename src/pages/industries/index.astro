@@ -1,0 +1,120 @@
+---
+import IndustryLayout from '../../layouts/IndustryLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import IndustryCard from '../../components/ui/IndustryCard.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import {
+  industriesHub,
+  industryCards,
+  industryAccompany,
+  industryHubSolutions,
+  projectsPlaceholder,
+} from '../../data/industries';
+---
+
+<IndustryLayout title={industriesHub.seoTitle} description={industriesHub.seoDescription}>
+  <Hero eyebrow={industriesHub.eyebrow} lead={industriesHub.lead} minHeight={false} class="pa-ind-hero">
+    <div slot="heading">
+      <Breadcrumb inverse items={[{ label: 'Accueil', href: '/' }, { label: 'Industries' }]} />
+      <h1 class="pa-display">
+        <span>{industriesHub.h1Lines[0]}</span>
+        <span>QUI FONT AVANCER L’<em>AFRIQUE CENTRALE.</em></span>
+      </h1>
+    </div>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+    </div>
+  </Hero>
+
+  <Section id="secteurs">
+    <Container>
+      <SectionHeader
+        label="Secteurs"
+        title="Cinq industries"
+        intro="BTP, mines, transport, agriculture et énergie."
+      />
+      <div class="pa-grid pa-grid--5">
+        {
+          industryCards.map((item) => (
+            <IndustryCard
+              class="pa-ind-card"
+              title={item.title}
+              description={item.description}
+              href={item.href}
+              pattern={item.pattern}
+              index={item.index}
+            />
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle" id="accompagnement">
+    <Container>
+      <SectionHeader
+        label="Accompagnement"
+        title="Comment Pacifique Auto peut accompagner"
+        intro="Véhicules, pièces, maintenance, flotte et financement. Ancrage Douala. Orientation Afrique Centrale."
+      />
+      <div class="pa-ind-accompany">
+        {
+          industryAccompany.map((pillar, i) => (
+            <article class="pa-ind-accompany__item">
+              <span class="pa-ind-accompany__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="pa-h4">{pillar.title}</h3>
+                <p class="pa-body">{pillar.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="solutions">
+    <Container>
+      <SectionHeader
+        label="Solutions"
+        title="Solutions à explorer"
+        intro="Les cinq familles du site public. Chaque secteur précise ensuite celles à regarder en priorité."
+      />
+      <div class="pa-grid pa-grid--3">
+        {
+          industryHubSolutions.map((item) => (
+            <FeatureCard class="pa-ind-explore" title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle" id="projets">
+    <Container>
+      <SectionHeader label="Preuve terrain" title={projectsPlaceholder.title} intro={projectsPlaceholder.intro} />
+      <div class="pa-ind-projects">
+        <p class="pa-body">{projectsPlaceholder.text}</p>
+        <Button href={projectsPlaceholder.href} variant="secondary">{projectsPlaceholder.label}</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</IndustryLayout>

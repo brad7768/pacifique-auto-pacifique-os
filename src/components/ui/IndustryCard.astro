@@ -7,9 +7,20 @@ interface Props {
   href?: string;
   imageSrc?: string;
   imageAlt?: string;
+  pattern?: 'btp' | 'mines' | 'transport' | 'agriculture' | 'energie';
+  index?: string;
   class?: string;
 }
-const { title, description, href, imageSrc, imageAlt = '', class: className = '' } = Astro.props;
+const {
+  title,
+  description,
+  href,
+  imageSrc,
+  imageAlt = '',
+  pattern,
+  index,
+  class: className = '',
+} = Astro.props;
 ---
 
 <Card href={href} padded={false} class:list={['pa-industry-card', className]}>
@@ -17,7 +28,12 @@ const { title, description, href, imageSrc, imageAlt = '', class: className = ''
     {imageSrc ? (
       <img src={imageSrc} alt={imageAlt} class="pa-media--cover" loading="lazy" />
     ) : (
-      <div class="pa-industry-card__placeholder" aria-hidden="true"></div>
+      <div
+        class:list={['pa-industry-card__placeholder', pattern && `pa-industry-card__placeholder--${pattern}`]}
+        aria-hidden="true"
+      >
+        {index && <span class="pa-industry-card__index">{index}</span>}
+      </div>
     )}
     <div class="pa-industry-card__overlay">
       <h3 class="pa-h3 pa-text-inverse">{title}</h3>
@@ -44,6 +60,70 @@ const { title, description, href, imageSrc, imageAlt = '', class: className = ''
 
   .pa-industry-card__placeholder {
     background: linear-gradient(135deg, var(--pa-color-primary), var(--pa-color-primary-soft));
+    position: relative;
+  }
+
+  .pa-industry-card__index {
+    position: absolute;
+    top: var(--pa-space-4);
+    right: var(--pa-space-5);
+    font-family: var(--pa-font-display);
+    font-weight: var(--pa-weight-black);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.12);
+    letter-spacing: var(--pa-tracking-display);
+  }
+
+  .pa-industry-card__placeholder--btp {
+    background:
+      repeating-linear-gradient(
+        135deg,
+        var(--pa-color-primary) 0 14px,
+        var(--pa-color-primary-mid) 14px 15px
+      );
+  }
+
+  .pa-industry-card__placeholder--mines {
+    background-color: var(--pa-color-primary);
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 18px,
+        rgba(255, 255, 255, 0.04) 18px 19px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 18px,
+        rgba(255, 255, 255, 0.04) 18px 19px
+      );
+  }
+
+  .pa-industry-card__placeholder--transport {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--pa-color-primary) 0 28px,
+        var(--pa-color-primary-mid) 28px 29px
+      );
+  }
+
+  .pa-industry-card__placeholder--agriculture {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        var(--pa-color-primary) 0 22px,
+        var(--pa-color-primary-soft) 22px 23px
+      );
+  }
+
+  .pa-industry-card__placeholder--energie {
+    background:
+      repeating-linear-gradient(
+        -25deg,
+        var(--pa-color-primary) 0 16px,
+        var(--pa-color-primary-mid) 16px 17px
+      );
   }
 
   .pa-industry-card__overlay {

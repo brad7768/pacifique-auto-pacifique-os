@@ -4,9 +4,11 @@
   line-height: 0.92;
 }
 
-.pa-ind-hero .pa-display span,
-.pa-ind-hero .pa-display em {
+.pa-ind-hero .pa-display span {
   display: block;
+}
+
+.pa-ind-hero .pa-display em {
   font-style: normal;
 }
 

@@ -1,0 +1,227 @@
+---
+import IndustryLayout from '../../layouts/IndustryLayout.astro';
+import Hero from '../../components/ui/Hero.astro';
+import Button from '../../components/ui/Button.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import CTASection from '../../components/ui/CTASection.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import {
+  industries,
+  industryBySlug,
+  industrySolutions,
+  projectsPlaceholder,
+} from '../../data/industries';
+
+export function getStaticPaths() {
+  return industries.map((industry) => ({
+    params: { slug: industry.slug },
+    props: { slug: industry.slug },
+  }));
+}
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const industry = industryBySlug(slug);
+if (!industry) {
+  throw new Error(`Unknown industry slug: ${slug}`);
+}
+const solutions = industrySolutions(industry);
+const inverseUnderstand = industry.understandTone === 'primary-mid';
+const solutionGrid = solutions.length === 4 ? 'pa-grid--2' : 'pa-grid--3';
+---
+
+<IndustryLayout title={industry.seoTitle} description={industry.seoDescription}>
+  <Hero
+    eyebrow="Industries"
+    description={industry.intro}
+    minHeight={false}
+    class={`pa-ind-hero pa-ind-page-hero pa-ind-hero--${industry.pattern}`}
+  >
+    <div slot="heading">
+      <Breadcrumb
+        inverse
+        items={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Industries', href: '/industries' },
+          { label: industry.title },
+        ]}
+      />
+      <h1 class="pa-display">{industry.title}</h1>
+    </div>
+    <span class="pa-ind-hero__index" aria-hidden="true">{industry.index}</span>
+    <div slot="actions" class="pa-cluster">
+      <Button href="/devis" variant="primary">Demander un devis</Button>
+      <Button href="/contact" variant="inverse-outline">Nous contacter</Button>
+    </div>
+  </Hero>
+
+  <Section tone={industry.understandTone} id="comprendre">
+    <Container>
+      <SectionHeader
+        label={industry.understandLabel}
+        title={industry.understandTitle}
+        inverse={inverseUnderstand}
+      />
+      {industry.understandLayout === 'split' && (
+        <div class="pa-ind-understand--split">
+          <div class="pa-ind-understand__copy">
+            <p class="pa-body">{industry.understand}</p>
+          </div>
+          <div class:list={['pa-ind-mark', `pa-ind-mark--${industry.pattern}`]} aria-hidden="true">
+            <span class="pa-ind-mark__label">{industry.title}</span>
+          </div>
+        </div>
+      )}
+      {industry.understandLayout === 'panel' && (
+        <div class="pa-ind-understand--panel">
+          <p class="pa-body">{industry.understand}</p>
+        </div>
+      )}
+      {industry.understandLayout === 'band' && (
+        <div class="pa-ind-understand--band">
+          <p class="pa-overline">Transport · logistique opérationnelle</p>
+          <div class="pa-ind-understand__copy">
+            <p class="pa-body">{industry.understand}</p>
+          </div>
+        </div>
+      )}
+      {industry.understandLayout === 'editorial' && (
+        <div class="pa-ind-understand--editorial pa-ind-understand__copy">
+          <p class="pa-body">{industry.understand}</p>
+        </div>
+      )}
+      {industry.understandLayout === 'stack' && (
+        <div class="pa-ind-understand--stack">
+          <div class="pa-ind-understand__copy">
+            <p class="pa-body">{industry.understand}</p>
+          </div>
+        </div>
+      )}
+    </Container>
+  </Section>
+
+  <Section tone={industry.needsTone} id="besoins">
+    <Container>
+      <SectionHeader
+        label={industry.needsLabel}
+        title={industry.needsTitle}
+        intro={industry.needsIntro}
+      />
+
+      {industry.needLayout === 'rail' && (
+        <ol class="pa-ind-needs--rail" role="list">
+          {industry.needs.map((need, i) => (
+            <li class="pa-ind-need">
+              <span class="pa-ind-need__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="pa-h3 pa-ind-need__title">{need.title}</h3>
+                <p class="pa-body">{need.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {industry.needLayout === 'rows' && (
+        <ol class="pa-ind-needs--rows pa-ind-needs--rail" role="list">
+          {industry.needs.map((need, i) => (
+            <li class="pa-ind-need">
+              <span class="pa-ind-need__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="pa-h3 pa-ind-need__title">{need.title}</h3>
+                <p class="pa-body">{need.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {industry.needLayout === 'grid' && (
+        <ul class="pa-ind-needs--grid" role="list">
+          {industry.needs.map((need, i) => (
+            <li class="pa-ind-need-card">
+              <span class="pa-ind-need-card__index">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="pa-h3">{need.title}</h3>
+              <p class="pa-body">{need.text}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {industry.needLayout === 'cards' && (
+        <ul class="pa-ind-needs--cards" role="list">
+          {industry.needs.map((need) => (
+            <li>
+              <FeatureCard title={need.title} description={need.text}>
+                <span slot="icon" class="pa-mark" aria-hidden="true" />
+              </FeatureCard>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {industry.needLayout === 'bars' && (
+        <ul class="pa-ind-needs--bars" role="list">
+          {industry.needs.map((need, i) => (
+            <li class="pa-ind-need-bar">
+              <p class="pa-overline">{String(i + 1).padStart(2, '0')}</p>
+              <h3 class="pa-h3">{need.title}</h3>
+              <p class="pa-body">{need.text}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Container>
+  </Section>
+
+  <Section id="solutions">
+    <Container>
+      <SectionHeader
+        label="Solutions"
+        title="Solutions à explorer pour ce secteur"
+        intro="Les solutions du site à regarder pour ce type d’opération. Elles ne constituent pas une preuve d’activité actuelle dans ce secteur."
+      />
+      <div class={`pa-grid ${solutionGrid}`}>
+        {
+          solutions.map((item) => (
+            <FeatureCard class="pa-ind-explore" title={item.title} description={item.description} href={item.href}>
+              <span slot="icon" class="pa-mark" aria-hidden="true" />
+            </FeatureCard>
+          ))
+        }
+      </div>
+      <div class="pa-cluster pa-ind-cta">
+        <Button href="/solutions" variant="outline">Toutes les solutions</Button>
+        <Button href="/industries" variant="ghost">Retour aux industries</Button>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="subtle" id="projets">
+    <Container>
+      <SectionHeader label="Preuve terrain" title={projectsPlaceholder.title} intro={projectsPlaceholder.intro} />
+      <div class="pa-ind-projects">
+        <p class="pa-body">{projectsPlaceholder.text}</p>
+        <div class="pa-cluster">
+          <Button href={projectsPlaceholder.href} variant="secondary">{projectsPlaceholder.label}</Button>
+          <Button href="/devis" variant="outline">Demander un devis</Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <CTASection
+    title="Parlons de votre prochain projet"
+    description="Devis, flotte, pièces ou maintenance — notre équipe vous répond."
+    primaryLabel="Demander un devis"
+    primaryHref="/devis"
+    secondaryLabel="Nous contacter"
+    secondaryHref="/contact"
+  />
+</IndustryLayout>

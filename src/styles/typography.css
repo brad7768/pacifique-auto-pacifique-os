@@ -76,14 +76,14 @@ h4 {
   font-size: var(--pa-text-body);
   font-weight: var(--pa-weight-regular);
   line-height: var(--pa-leading-relaxed);
-  color: var(--pa-color-text-muted);
+  color: var(--pa-color-text-secondary);
 }
 
 .pa-caption {
   font-family: var(--pa-font-body);
   font-size: var(--pa-text-caption);
   line-height: var(--pa-leading-normal);
-  color: var(--pa-color-text-muted);
+  color: var(--pa-color-text-secondary);
 }
 
 .pa-overline {

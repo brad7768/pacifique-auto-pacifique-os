@@ -41,6 +41,9 @@
   /* ——— COLOR: TEXT ——— */
   --pa-color-text: #09183a;
   --pa-color-text-inverse: #ffffff;
+  /* Secondary body / metadata on light surfaces — WCAG AA on white and #f4f6fb. */
+  --pa-color-text-secondary: #5e6b86;
+  /* Muted text on navy surfaces only. */
   --pa-color-text-muted: #8a96b0;
   --pa-color-text-on-dark-muted: #c8d0e4;
 

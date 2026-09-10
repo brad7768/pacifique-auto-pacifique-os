@@ -83,7 +83,7 @@
 }
 
 .pa-sol-tool .pa-overline {
-  color: var(--pa-color-text-muted);
+  color: var(--pa-color-text-secondary);
   margin-bottom: var(--pa-space-4);
 }
 
